@@ -1,0 +1,28 @@
+Averae Marks
+
+
+
+//package learningproject;
+
+import java.util.Scanner;
+
+public class Solution{
+ 
+
+	public static void main(String[] args) 
+	{
+
+	int m1, m2, m3, A;
+	Scanner s = new Scanner(System.in);
+	String str = s.next();
+	char ch=str.charAt(0);
+	System.out.println(ch);
+	    m1= s.nextInt();
+	     m2= s.nextInt();
+	m3= s.nextInt();
+	A= (m1+m2+m3)/3;
+    System.out.println(A);
+
+	}
+
+}
