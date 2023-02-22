@@ -1,0 +1,329 @@
+************************************************************************************************************************************************************************
+                                          Code : Mirror Image Number Pattern
+************************************************************************************************************************************************************************
+import java.util.*;
+public class Solution {
+      public static void main(String[] args) {
+		
+		/* Your class should be named Solution.
+	 	* Read input as specified in the question.
+	 	* Print output as specified in the question.
+		*/
+
+          Scanner scr = new Scanner(System.in);
+       int n = scr.nextInt();
+       int i = 1;
+       
+       while( i<=n ){
+           int Start = 1;
+           int j =1;
+           while( j <= n - i ){
+               System.out.print(" ");
+             j++;
+           }
+           while(j<=n){
+               System.out.print(Start);
+               Start++;
+               j++;
+           }
+           System.out.println();
+           i++;
+       }
+	}
+}
+************************************************************************************************************************************************************************
+                                     Code : Inverted Number Pattern
+**********************************************************************************************************************************************************************
+import java.util.*;
+public class Solution {
+       public static void main(String[] args) {
+		
+		/* Your class should be named Solution.
+	 	* Read input as specified in the question.
+	 	* Print output as specified in the question.
+		*/
+
+		Scanner scr = new Scanner(System.in);
+       int n = scr.nextInt();
+       int i = 1;
+       while(i <= n){
+           int j = n-i+1;
+           int num = j;
+           while(j >0 ){
+               System.out.print(num);
+               j--;
+           }
+           System.out.println();
+           i++;
+       }
+	}
+
+}
+*******************************************************************************************************************************************************************
+                                             Code : Star Pattern
+*******************************************************************************************************************************************************************
+import java.util.Scanner;
+public class Solution {
+     public static void main(String[] args) {
+		
+		/* Your class should be named Solution.
+	 	* Read input as specified in the question.
+	 	* Print output as specified in the question.
+		*/
+
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int space=n-1;
+		int i=1;
+		while(i<=n)
+		{	int j=1;
+             space=n-i;
+             while(space>0)
+			{
+				System.out.print(" ");
+				space--;
+			}
+			while(j<=((2*i)-1))
+			{
+				System.out.print("*");
+				j+=1;
+			}
+			System.out.println("");
+			i+=1;
+		}
+        
+        
+	}
+
+}
+******************************************************************************************************************************************************************
+
+                                                             Code : Triangle of Numbers
+ *****************************************************************************************************************************************************************
+ import java.util.Scanner;
+import java.util.Scanner;
+
+public class Solution {
+public static void main(String[] args) {
+Scanner sc=new Scanner(System.in);
+int n=sc.nextInt();
+    int i=1;
+while(i<=n)
+{  
+ int space=1;
+ while(space<=n-i)
+{
+     System.out.print(" ");
+     space++;
+}
+     int j = 1;
+    int p = i;
+    while(j<=i)
+    {
+        System.out.print(p);
+            p++;
+            j++;
+    }
+     j=1;
+     p= (i-1)*2;
+    while(j<=i-1)
+    {
+       System.out.print(p);
+        p--;
+        j++;
+    }
+i++;
+    System.out.println();
+}
+        
+	}
+}
+******************************************************************************************************************************************************************
+                                             Code : Diamond of stars
+******************************************************************************************************************************************************************
+import java.util.Scanner;
+public class Solution
+ {
+  public static void main(String args[])
+  {
+        Scanner sc=new Scanner(System.in);
+         int n = sc.nextInt();
+         int num=(n/2)+1;
+         int count = num - 1;
+          for(int i = 1; i <= num; i++) 
+          {
+            for(int j = 1; j <= count; j++)
+             {
+              System.out.print(" ");
+             }
+
+            count--;
+
+               for(int k = 1; k <= (2 * i) - 1; k++) 
+               {
+               System.out.print("*");
+               }
+
+        System.out.println("");
+    }
+    count = 1;
+
+                   for(int i = 1; i <= (num - 1); i++)
+                    {
+                        for(int j = 1; j <= count; j++) {
+                        System.out.print(" ");
+      }
+
+      count++;
+
+                 for(int k = 1; k <= (2 * (num - i)) - 1; k++) {
+                   System.out.print("*");
+      }
+
+                        System.out.println("");
+    }
+  }
+}
+
+*****************************************************************************************************************************************************************
+
+                                  Assignment       Half Diamond Pattern
+*****************************************************************************************************************************************************************
+
+import java.util.Scanner;
+public class Solution {
+    
+    public static void main(String[] args) {
+        
+        // Write your code here
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        System.out.println("*");
+        for (int i = 1; i <= n; i++) 
+        {
+            int j = 1;
+            System.out.print("*");
+            while (j <= i)
+            {
+                System.out.print(j);
+                j++;
+            }
+            j--;
+            while (--j >= 1)
+            {
+                System.out.print(j );
+            }
+            System.out.println("*");
+        }
+        for (int i = n - 1; i >= 1; i--) 
+        {
+            int j = 1;
+            System.out.print("*");
+            while (j <= i) {
+                System.out.print(j);
+                j++;
+            }
+            j--;
+            while (--j >= 1) 
+            {
+                System.out.print(j );
+            }
+            System.out.println("*");
+        }
+        System.out.println("*");
+    
+    }
+}
+
+********************************************************************************************************************************************************************
+                                         Parallelogram Pattern
+********************************************************************************************************************************************************************
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Write your code here
+        Scanner sc = new Scanner(System.in);
+        int row = sc.nextInt();
+
+        for (int i = 1; i <= row; i++)
+        {
+            for (int j = 2; j <= i; j++)
+            {
+                System.out.print(" ");
+            }
+            for (int j = 1; j <= row; j++)
+            {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+
+    }
+
+}
+
+*******************************************************************************************************************************************************************
+                                                           Sum Pattern
+*******************************************************************************************************************************************************************
+import java.util.*;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// Write your code here
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int i, j, num;
+
+		for (i = 1; i <= n; i++) {
+			num = 1;
+			int sum = 0;
+			for (j = 1; j <= i; j++) {
+				System.out.print(num + "");
+				sum = sum + num;
+				if (num < i) {
+					System.out.print("+");
+				}
+
+				num++;
+			}
+			System.out.print("=" + sum);
+			System.out.println();
+		}
+
+	}
+}
+
+
+**********************************************************************************************************************************************************
+                                                          Odd Square
+**********************************************************************************************************************************************************
+
+import java.util.*;
+
+public class Main {
+    
+    public static void main(String[] args) {
+        
+        // Write your code here
+        
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = i - 1; j < n; j++ )
+            {
+                System.out.print(j * 2 + 1 + "");
+            }
+            for(int k = 0; k < i - 1; k++)
+            {
+                System.out.print(k * 2 + 1 + "");
+            }
+            System.out.println();
+        }
+    
+    }
+}
+
