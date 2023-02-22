@@ -1,0 +1,173 @@
+**********************************************************************************************************************************************************************
+                                            Code : Square Pattern
+**********************************************************************************************************************************************************************
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int N = s.nextInt();
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <=N; j++) {
+				System.out.print(N);
+			}
+			System.out.println();
+		}
+
+	}
+
+}
+
+************************************************************************************************************************************************************************
+                                      Code : Triangular Star Pattern
+***********************************************************************************************************************************************************************
+import java.util.Scanner;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        int N = s.nextInt();
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= i; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+    }
+}
+**********************************************************************************************************************************************************************
+                                                     Code : Triangle Number Pattern
+**********************************************************************************************************************************************************************
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int N = s.nextInt();
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <= i; j++) {
+				System.out.print(i);
+			}
+			System.out.println();
+		}
+
+	}
+
+}
+
+*****************************************************************************************************************************************************************
+                                   Code : Reverse Number Pattern
+*****************************************************************************************************************************************************************
+import java.util.Scanner;
+
+public class Solution {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int N = s.nextInt();
+		for (int i = 1; i <= N; i++) {
+			for (int j = i; j >= 1; j--) {
+				System.out.print(j);
+			}
+			System.out.println();
+		}
+
+	}
+
+}
+
+*****************************************************************************************************************************************************************
+                                                Code : Alpha Pattern
+*****************************************************************************************************************************************************************
+import java.util.*;
+public class Solution {
+
+public static void main(String[] args) {
+
+/* Your class should be named Solution.
+* Read input as specified in the question.
+* Print output as specified in the question.
+*/
+         Scanner s = new Scanner(System.in);
+         int n = s.nextInt();
+         int i=1;
+         int k=65;
+         while(i<=n)
+         {
+             int j=1;
+             while(j<=i)
+             {
+                 System.out.print((char)k);
+               
+                 j=j+1;
+             }
+               k=k+1;
+             i=i+1;
+             System.out.println();
+         }
+}
+}
+********************************************************************************************************************************************************************
+                                                    Code : Character Pattern
+********************************************************************************************************************************************************************
+import java.util.*;
+public class Solution {
+  public static void main(String[] args) {
+		
+		
+         Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        int i = 1;
+        
+        while( i<= n ){
+            int j = 1;
+           int  Start = 'A'+i-1;
+            while(j<= i){
+                System.out.print((char)(Start));
+                j++;
+               Start++;
+            }
+            System.out.println();
+            i++;
+        }
+		
+	}
+
+}
+
+******************************************************************************************************************************************************************
+                                           Code : Interesting Alphabets
+******************************************************************************************************************************************************************
+
+import java.util.*;
+public class Solution {
+
+
+	public static void main(String[] args) {
+		
+		/* Your class should be named Solution.
+	 	* Read input as specified in the question.
+	 	* Print output as specified in the question.
+		*/
+        Scanner sc= new Scanner(System.in);
+        int N = sc.nextInt();
+        int m;
+        char c=(char)(65+N);
+        for(int i=1;i<=N;i++)
+        {            
+                     c=(char)(c-i);
+                     for(int j=0;j<i;j++)
+                    {    
+                        System.out.print(c);
+                        c++;
+                    }   
+        System.out.println("");
+        }
+
+		
+	}
+
+}
