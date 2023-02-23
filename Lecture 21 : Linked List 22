@@ -1,0 +1,785 @@
+========================================================================================================================================================================
+_____________________________Delete node Recursively___________________________________Delete node Recursively__________________________________________________________
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+========================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+public class Solution {
+
+
+	public static LinkedListNode<Integer> deleteNodeRec(LinkedListNode<Integer> head, int pos) {
+    	//Your code goes here
+		if (head == null)
+        {
+            return head;
+        }
+        
+        if (pos==0)
+        {
+            head=head.next;
+            return head;
+        }
+        else
+        {
+            LinkedListNode<Integer> smallerHead=deleteNodeRec(head.next,pos-1);
+            head.next=smallerHead;
+            return head;
+        }  
+	}
+
+}
+
+=====================================================================================================================================================================
+____________________________________Reverse LL (Recursive)_____________________________________Reverse LL (Recursive)________________________________________________
+____________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+public class Solution {
+
+	public static LinkedListNode<Integer> reverseLinkedListRec(LinkedListNode<Integer> head ) {
+		//Your code goes here
+
+        if (head==null || head.next==null)
+        {
+            return head;
+        }
+        LinkedListNode<Integer> smallerHead=reverseLinkedListRec(head.next);
+        LinkedListNode<Integer> node=smallerHead;
+        while (node.next!=null)
+        {
+            node=node.next;
+        }
+        node.next=head;
+        head.next=null;
+        return smallerHead;
+	}
+
+	}
+
+=====================================================================================================================================================================
+___________________________________________________Mid Point Linked List____________________________________Mid Point Linked List___________________________________
+____________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+public class Solution {
+    
+    public static LinkedListNode<Integer> midPoint(LinkedListNode<Integer> head) {
+        //Your code goes here
+
+
+
+         if (head==null || head.next==null)
+        {
+            return head;
+        }
+        LinkedListNode<Integer> fast=head,slow=head;
+        while(fast.next!=null && fast.next.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+
+}
+=======================================================================================================================================================================
+___________________________________________________Merge Two Sorted LL_________________________________Merge Two Sorted LL____________________________________________
+========================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+public class Solution {
+    
+    public static LinkedListNode<Integer> mergeTwoSortedLinkedLists(LinkedListNode<Integer> head1, LinkedListNode<Integer> head2) {
+        //Your code goes here
+        if (head1==null)
+        {
+            return head2;
+        }
+        
+        if (head2==null)
+        {
+            return head1;
+        }
+        
+        LinkedListNode<Integer> newHead=null,node1=head1,node2=head2,newNode=null;
+        int data1=node1.data,data2=node2.data;
+        if (data1<data2)
+        {
+            newHead=node1;
+            node1=node1.next;
+        }
+        else
+        {
+            newHead=node2;
+            node2=node2.next;
+        }
+        newNode=newHead;
+        while(node1!=null && node2!=null)
+        {
+            data1=node1.data;
+            data2=node2.data;
+            if (data1<data2)
+            {
+                newNode.next=node1;
+                newNode=newNode.next;
+                node1=node1.next;
+            }
+            else
+            {
+                newNode.next=node2;
+                newNode=newNode.next;
+                node2=node2.next;
+            }
+        }
+        
+        while(node1!=null)
+        {
+            newNode.next=node1;
+            newNode=newNode.next;
+            node1=node1.next;
+        }
+        while (node2!=null)
+        {
+            newNode.next=node2;
+            newNode=newNode.next;
+            node2=node2.next;
+        }
+        return newHead;
+    }
+
+}
+======================================================================================================================================================================
+___________________________________Merge Sort LL_________________________________________________Merge Sort LL________________________________________________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+public class Solution {
+
+    public static LinkedListNode<Integer> mergeSort(LinkedListNode<Integer> head) {
+        if(head==null)
+            return head;
+        if(head.next==null)
+            return head;
+        LinkedListNode<Integer> midNode=findmid(head);
+        LinkedListNode<Integer> h2=midNode.next;
+        midNode.next=null;
+        LinkedListNode<Integer> part1=mergeSort(head);
+        LinkedListNode<Integer> part2=mergeSort(h2);
+        LinkedListNode<Integer> mergedList=mergeTwoList(part1,part2);
+        return mergedList;
+        
+        }
+    private static LinkedListNode<Integer> findmid(LinkedListNode<Integer> head) 
+    {
+        if(head==null)
+            return head;
+        LinkedListNode<Integer> slow=head,fast=head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    public static LinkedListNode<Integer> mergeTwoList(LinkedListNode<Integer> head1, LinkedListNode<Integer> head2) {
+        if(head1==null)
+            return head2;
+        if(head2==null)
+            return head1;
+        LinkedListNode<Integer> t1=head1,t2=head2,tail=null,head=null;
+        if(t1.data<=t2.data)
+        {
+            head=t1;
+            tail=t1;
+            t1=t1.next;
+        }
+        else
+        {
+            head=t2;
+            tail=t2;
+            t2=t2.next;
+        }
+        while(t1!=null &&t2!=null)
+        {
+            if(t1.data<=t2.data)
+            {
+                tail.next=t1;
+                tail=t1;
+                t1=t1.next;
+            }
+            else
+            {
+                tail.next=t2;
+                tail=tail.next;
+                t2=t2.next;
+            }
+        }
+        if(t1==null)
+            tail.next=t2;
+        if(t2==null)
+            tail.next=t1;
+        return head;
+
+    }
+
+}
+
+
+====================================================================================================================================================================
+___________________________________Assignment-----------Find a node in LL (recursive)-------------Assignment---------Find a node in LL (recursive)___________________
+______________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+public class Solution {
+
+
+	public static int findNodeRec(LinkedListNode<Integer> head, int n) {
+    	//Your code goes here
+
+            if (head==null) //Empty linked list
+        {
+            return -1;
+        }
+        
+        if (head.data.equals(n))
+        {
+            return 0;
+        }
+        int smallIndex=findNodeRec(head.next,n);
+        if (smallIndex==-1)
+        {
+            return smallIndex;
+        }
+        else
+        {
+            return smallIndex+1;
+        }
+	}
+	}
+
+=====================================================================================================================================================================
+___________________________________Even after Odd LinkedList__________________________________Even after Odd LinkedList_____________________________________________
+____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+
+public class Solution {
+
+	public static LinkedListNode<Integer> evenAfterOdd(LinkedListNode<Integer> head) {
+		//Your code goes here
+         if (head==null || head.next==null)
+        {
+            return head;
+        }
+        LinkedListNode<Integer> node=head,evenNode=null,oddNode=null,oddHead=null,evenHead=null;
+        while(node!=null)
+        {            
+            int data=node.data;
+            
+            
+            if (data%2==0)
+        	{
+                
+                if (evenNode==null)
+                {
+                    
+                    evenNode=node;
+                    evenHead=node;
+                }
+                else
+                {
+                    evenNode.next=node;
+                	evenNode=evenNode.next;
+                }
+              
+            	
+        	}
+        	else
+        	{
+             
+                if (oddNode==null)
+                {
+                   
+                    oddNode=node;
+                    oddHead=node;
+                }
+                else
+                {
+                    oddNode.next=node;
+                	oddNode=oddNode.next;
+                }
+             
+            	
+        	}
+            
+          
+            node=node.next;
+        }
+        
+        if (oddHead==null)
+        {
+            return evenHead;
+        }
+        else
+        {
+            oddNode.next=evenHead;
+        }
+        
+        if (evenNode!=null)
+        {
+            evenNode.next=null;
+        }
+        
+        
+        return oddHead;
+        
+	}
+	}
+======================================================================================================================================================================
+____________________________Delete every N nodes_____________Delete every N nodes____________Delete every N nodes____________________________________________________
+_____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+
+
+public class Solution {
+	
+	public static LinkedListNode<Integer> skipMdeleteN(LinkedListNode<Integer> head, int M, int N) {
+		//Your code goes here
+          if (M==0)
+        {
+            return null;
+        }
+        if (N==0)
+        {
+            return head;
+        }
+    
+        LinkedListNode<Integer> node=head,delNode=null;
+        while(node!=null)
+        {
+            for (int i=0;i<M-1 && node!=null;i++)
+            {
+                //System.out.print(node.data+" ");
+                node=node.next;
+            }
+            //System.out.println();
+            if (node==null)
+            {
+                break;
+            }
+            
+            delNode=node.next;         
+            for (int i=0;i<N && delNode!=null;i++)
+            {
+                //System.out.print(delNode.data+" ");
+                delNode=delNode.next;
+            }
+            node.next=delNode;
+            node=delNode;
+        }
+         
+        return head;
+	}
+}
+
+======================================================================================================================================================================
+________________________________Swap two Nodes of LL_______________Swap two Nodes of LL______________________________Swap two Nodes of LL____________________________
+_____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+
+
+      public class Solution {
+    
+    public static LinkedListNode<Integer> findPrevNode(LinkedListNode<Integer> head, int count)
+    {
+        for (int i=0;i<count-1;i++)
+        {
+            head=head.next;
+        }
+        return head;
+    }
+
+	public static LinkedListNode<Integer> swapNodes(LinkedListNode<Integer> head, int i, int j) {
+		//Your code goes here
+        if (head==null)
+        {
+            return head;
+        }
+        else if (j==0 || (i-j==-1))
+        {
+            int temp=i;
+            i=j;
+            j=temp;
+        }
+        
+        LinkedListNode<Integer> swap1=null,swap2=null,p1=null,n1=null,p2=null,n2=null;
+        
+        if (i==0 && i-j==1)
+        {
+            swap1=head;
+            swap2=head.next;
+
+            swap1=swap1.next;
+            head=swap2;
+            swap2.next=swap1;
+            
+        }
+        else if(i-j==1)
+        {
+            p1=findPrevNode(head,j);
+        	swap1=p1.next;
+            swap2=swap1.next;
+            n2=swap2.next;
+            //System.out.println(p1.data);
+            //System.out.println(swap1.data);
+            //System.out.println(swap2.data);
+            //System.out.println(n2.data);
+            
+            p1.next=swap2;
+            swap2.next=swap1;
+            swap1.next=n2;
+            
+        }
+        else if (i==0)
+        {
+            swap1=head;
+            n1=swap1.next;
+            p2=findPrevNode(head,j);
+            swap2=p2.next;
+            n2=swap2.next;
+            
+            head=swap2;
+            head.next=n1;
+            p2.next=swap1;
+            swap1.next=n2;
+            
+        }
+        else
+        {
+        	p1=findPrevNode(head,i);
+        	p2=findPrevNode(head,j);
+        	swap1=p1.next;
+        	swap2=p2.next;
+        	n1=swap1.next;
+        	n2=swap2.next;
+        
+        	p1.next=swap2;
+        	p2.next=swap1;
+        	swap1.next=n2;
+        	swap2.next=n1;
+        }
+        
+        
+        return head;
+	}
+
+}
+======================================================================================================================================================================
+____________________________kReverse______________________kReverse______________________________kReverse____________________________________________________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+
+    Following is the Node class already written for the Linked List
+
+    class LinkedListNode<T> {
+        T data;
+        LinkedListNode<T> next;
+    
+        public LinkedListNode(T data) {
+            this.data = data;
+        }
+    }
+
+*/
+
+public class Solution {
+
+	public static LinkedListNode<Integer> reverseLinkedListRec(LinkedListNode<Integer> head) {
+		//Your code goes here
+        
+        if (head==null || head.next==null)
+        {
+            return head;
+        }
+        LinkedListNode<Integer> smallerHead=reverseLinkedListRec(head.next);
+        LinkedListNode<Integer> node=smallerHead;
+        while (node.next!=null)
+        {
+            node=node.next;
+        }
+        node.next=head;
+        head.next=null;
+        return smallerHead;
+	}
+    
+    public static LinkedListNode<Integer> findTail(LinkedListNode<Integer> head, int k)
+    {
+            for (int i=0;i<k && head.next!=null;i++)
+            {
+                head=head.next;
+            }
+            return head;
+        
+        
+    }
+    
+    public static int findLength(LinkedListNode<Integer> head)
+    {
+        int count=0;
+        while(head.next!=null)
+        {
+            head=head.next;
+            count=count+1;
+        }
+        return count;
+    }
+    
+    public static LinkedListNode<Integer> kReverse(LinkedListNode<Integer> head, int k) {
+		//Your code goes here
+        if (head==null || k==0 || k==1)
+        {
+            return head;
+        }
+        else if (k>findLength(head))
+        {
+            return reverseLinkedListRec(head);
+        }
+        
+        LinkedListNode<Integer> node=head,nextNode=null,tail=null,prevTail=null,newHead=null;
+        while(node!=null)
+        {
+            tail=findTail(node,k-1);
+            nextNode=tail.next;
+            tail.next=null;
+            newHead=reverseLinkedListRec(node);
+            //Runner.print(newHead);
+            if (node==head)
+            {
+                tail=head;
+                tail.next=nextNode;
+                head=newHead;
+                
+            }
+            else
+            {
+                tail=node;
+                tail.next=nextNode;
+                prevTail.next=newHead;
+                
+            }
+            node=nextNode;
+            prevTail=tail;
+            //Runner.print(head);
+            
+        }
+        return head;
+        
+        
+	}
+
+}
+====================================================================================================================================================================
+_____________________________________________________Bubble Sort (Iterative) LinkedList________Bubble Sort (Iterative) LinkedList___________________________________
+____________________________________________________________________________________________________________________________________________________________________
+====================================================================================================================================================================
+/*
+
+	Following is the Node class already written for the Linked List
+
+	class LinkedListNode<T> {
+    	T data;
+    	LinkedListNode<T> next;
+    
+    	public LinkedListNode(T data) {
+        	this.data = data;
+    	}
+	}
+
+*/
+
+public class Solution {
+
+	public static LinkedListNode<Integer> bubbleSort(LinkedListNode<Integer> head )
+	{    
+		if(head==null || head.next==null)
+        return head;
+        //Write your code here
+        for(int i=0;i<lengthLL(head)-1;i++){
+            LinkedListNode<Integer> prev = null;
+            LinkedListNode<Integer> curr = head;
+            LinkedListNode<Integer> next = curr.next;
+
+            while(curr.next != null){
+                if(curr.data > curr.next.data){
+                    if(prev == null){
+                        curr.next = next.next;
+                        next.next = curr;
+                        prev = next;
+                        head = prev;
+                    }else{
+                        next = curr.next;
+                        curr.next = next.next;
+                        prev.next = next;
+                        next.next = curr;
+                        prev = next;
+                    }
+                }else
+				{
+                    prev = curr;
+                    curr = curr.next;
+                }
+            }
+        }
+        return head;
+    }
+    
+    private static int lengthLL(LinkedListNode<Integer> head){
+        int count = 1;
+        while(head.next != null){
+            head = head.next;
+            count++;
+        }
+        return count;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
