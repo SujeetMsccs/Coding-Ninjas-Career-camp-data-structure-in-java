@@ -1,0 +1,449 @@
+=========================================================================================================================================================================
+_____________Find path in BST-----------Find path in BST--------------Find path in BST----------------Find path in BST---------------Find path in BST____________________
+_________________________________________________________________________________________________________________________________________________________________________
+=========================================================================================================================================================================
+import java.util.ArrayList;
+
+public class Solution {
+
+	/*
+	 * Binary Tree Node class
+	 * 
+	 * class BinaryTreeNode<T> { 
+	 * 		T data; 
+	 * 		BinaryTreeNode<T> left; 
+	 * 		BinaryTreeNode<T> right;
+	 * 		public BinaryTreeNode(T data) 
+	 * 		{ 
+	 * 			this.data = data; 
+	 * 		}
+	 * }
+	 */
+
+	public static ArrayList<Integer> getPath(BinaryTreeNode<Integer> root, int data){
+		/* Your class should be named Solution
+		* Don't write main().
+		* Don't read input, it is passed as function argument.
+		* Return output and don't print it.
+		* Taking input and printing output is handled automatically.
+		*/
+        if (root==null)
+            return null;
+        
+        ArrayList<Integer> output;
+        if (root.data==data)
+        {
+            output= new ArrayList<Integer>();
+            output.add(root.data);
+            return output;
+        }
+        
+        if (data<root.data)
+        {
+            output = getPath(root.left,data);
+            if (output != null)
+            {
+                output.add(root.data);
+            }
+            return output;
+        }
+        
+        if (data>root.data)
+        {
+            output = getPath(root.right,data);
+            if (output != null)
+            {
+                output.add(root.data);
+            }
+            return output;
+        }
+        return null;
+	}
+}
+=====================================================================================================================================================================
+_______________BST Class-------------BST Class-------------------BST Class-------------------BST Class--------------BST Class-----------------BST Class______________
+______________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+
+class BSTDeleteReturn {
+	BinaryTreeNode<Integer> root;
+	boolean deleted;
+
+	public BSTDeleteReturn(BinaryTreeNode<Integer> root, boolean deleted) {
+		this.root = root;
+		this.deleted = deleted;
+	}
+}
+
+public class BinarySearchTree {
+	private BinaryTreeNode<Integer> root;
+	private int size;
+
+	public void insert(int data) {
+		// Implement the insert() function
+		root = insertHelper(root, data);
+		size++;
+	}
+
+	private static BinaryTreeNode<Integer> insertHelper(BinaryTreeNode<Integer> root, int x) {
+		if (root == null) {
+			BinaryTreeNode<Integer> newRoot = new BinaryTreeNode<Integer>(x);
+			return newRoot;
+		}
+
+		if (x > root.data) {
+			root.right = insertHelper(root.right, x);
+		} else {
+			root.left = insertHelper(root.left, x);
+		}
+		return root;
+	}
+
+	public void remove(int data) {
+		// Implement the remove() function
+		BSTDeleteReturn output = deleteDataHelper(root, data);
+		root = output.root;
+		if (output.deleted) {
+			size--;
+		}
+		// return output.deleted;
+	}
+
+	private static BSTDeleteReturn deleteDataHelper(BinaryTreeNode<Integer> root, int x) {
+		if (root == null)
+			return new BSTDeleteReturn(null, false);
+
+		if (root.data < x) {
+			BSTDeleteReturn outputRight = deleteDataHelper(root.right, x);
+			root.right = outputRight.root;
+			outputRight.root = root;
+			return outputRight;
+		}
+
+		if (root.data > x) {
+			BSTDeleteReturn outputLeft = deleteDataHelper(root.left, x);
+			root.left = outputLeft.root;
+			outputLeft.root = root;
+			return outputLeft;
+		}
+
+		// Now, we handle the three sub cases where root.data=x
+		// Handling case where root has no children
+		if (root.left == null && root.right == null)
+			return new BSTDeleteReturn(null, true);
+
+		// Handling case where only left child is present
+		if (root.left != null && root.right == null)
+			return new BSTDeleteReturn(root.left, true);
+
+		// Handling case where only right child is present
+		if (root.right != null && root.left == null)
+			return new BSTDeleteReturn(root.right, true);
+
+		// Both children are present
+		// Get the smallest node's data from right subtree
+		int rightSmallest = minimum(root.right);
+
+		// Replace current root's data with smallest node's data
+		root.data = rightSmallest;
+
+		// Now, delete the node with the smallest value from the right subtree
+		BSTDeleteReturn outputRight = deleteDataHelper(root.right, rightSmallest);
+
+		// Update the current root's right child, after removing the node with smallest
+		// value
+		root.right = outputRight.root;
+
+		return new BSTDeleteReturn(root, true);
+	}
+
+	// Find the smallest data value in the binary tree
+	private static int minimum(BinaryTreeNode<Integer> root) {
+		if (root == null)
+			return Integer.MAX_VALUE;
+
+		int leftMin = minimum(root.left);
+		int rightMin = minimum(root.right);
+
+		return Math.min(root.data, Math.min(leftMin, rightMin));
+	}
+
+	public void printTree() {
+		// Implement the printTree() function
+		printTreeDetailed(root);
+	}
+
+	private static void printTreeDetailed(BinaryTreeNode<Integer> root) {
+		if (root == null) {
+			return;
+		}
+		System.out.print(root.data + ":");
+		if (root.left != null) {
+			System.out.print("L:" + root.left.data + ",");
+		}
+		if (root.right != null) {
+			System.out.print("R:" + root.right.data);
+		}
+		System.out.println();
+		printTreeDetailed(root.left);
+		printTreeDetailed(root.right);
+	}
+
+	public boolean search(int data) {
+		// Implement the search() function
+		return isPresentHelper(root, data);
+	}
+
+	private static boolean isPresentHelper(BinaryTreeNode<Integer> root, int x) {
+		if (root == null)
+			return false;
+
+		if (root.data == x)
+			return true;
+
+		if (x < root.data) {
+			return isPresentHelper(root.left, x);
+		} else {
+			return isPresentHelper(root.right, x);
+		}
+	}
+}
+
+======================================================================================================================================================================
+________________Practice----------Level wise linkedlist--------------Level wise linkedlist----------------------Level wise linkedlist----Practice_____________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+import java.util.*;
+
+public class Solution {
+	/*
+	 * BinaryTreeNode class
+	 * 
+	 * class BinaryTreeNode<T>
+	 * {
+	 * T data;
+	 * BinaryTreeNode<T> left;
+	 * BinaryTreeNode<T> right;
+	 * public BinaryTreeNode(T data)
+	 * {
+	 * this.data = data;
+	 * }
+	 * }
+	 */
+	/*
+	 * LinkedListNode Class
+	 * class LinkedListNode<T>
+	 * {
+	 * T data;
+	 * LinkedListNode<T> next;
+	 * public LinkedListNode(T data)
+	 * {
+	 * this.data = data;
+	 * }
+	 * }
+	 */
+	private static ArrayList<LinkedListNode<Integer>> arr = new ArrayList<LinkedListNode<Integer>>();
+
+	public static ArrayList<LinkedListNode<Integer>> constructLinkedListForEachLevel(BinaryTreeNode<Integer> root) {
+		// Write your code here
+		if (root == null)
+			return null;
+
+		Queue<BinaryTreeNode<Integer>> nodesToPrint = new LinkedList<BinaryTreeNode<Integer>>();
+		nodesToPrint.add(root);
+		nodesToPrint.add(null);
+		LinkedListNode<Integer> head = null, tail = null;
+		// arr.add(head);
+		while (!nodesToPrint.isEmpty()) {
+			BinaryTreeNode<Integer> front = nodesToPrint.poll();
+			if (front == null) {
+				if (nodesToPrint.isEmpty())
+					break;
+				else {
+					// System.out.println();
+					nodesToPrint.add(null);
+					tail.next = null;
+					tail = tail.next;
+					head = null;
+
+				}
+
+			} else {
+				if (head == null) {
+					head = new LinkedListNode<Integer>(front.data);
+					tail = head;
+					arr.add(head);
+				} else {
+					tail.next = new LinkedListNode<Integer>(front.data);
+					tail = tail.next;
+				}
+				// System.out.print(front.data+" ");
+				if (front.left != null)
+					nodesToPrint.add(front.left);
+				if (front.right != null)
+					nodesToPrint.add(front.right);
+			}
+		}
+		return arr;
+	}
+
+}
+
+
+======================================================================================================================================================================
+___________Largest BST-----------Largest BST---------------Largest BST---------------------Largest BST--------------------Largest BST---Largest BST__________________
+_____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+public class Solution {
+	/*
+	 * BinaryTreeNode class
+	 * 
+	 * class BinaryTreeNode<T>
+	 * {
+	 * T data;
+	 * BinaryTreeNode<T> left;
+	 * BinaryTreeNode<T> right;
+	 * public BinaryTreeNode(T data)
+	 * {
+	 * this.data = data;
+	 * }
+	 * }
+	 */
+
+	public static int largestBSTSubtree(BinaryTreeNode<Integer> root) {
+		// Write your code here
+		if (root == null)
+			return 0;
+
+		if (isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			return findHeight(root);
+		else {
+			return Math.max(largestBSTSubtree(root.left), largestBSTSubtree(root.right));
+		}
+
+	}
+
+	private static int findHeight(BinaryTreeNode<Integer> root) {
+		if (root == null)
+			return 0;
+
+		if (root.left == null && root.right == null)
+			return 1;
+
+		return Math.max(findHeight(root.left), findHeight(root.right)) + 1;
+	}
+
+	private static boolean isBST(BinaryTreeNode<Integer> root, int min, int max) {
+		if (root == null)
+			return true;
+
+		if (root.data < min || root.data > max)
+			return false;
+		else
+			return isBST(root.left, min, root.data - 1) && isBST(root.right, root.data + 1, max);
+	}
+
+}
+=====================================================================================================================================================================
+
+________________Pair sum in a BST------------Pair sum in a BST--------------Pair sum in a BST--------------------Pair sum in a BST---Pair sum in a BST_________________
+_____________________________________________________________________________________________________________________________________________________________________
+
+=====================================================================================================================================================================
+import java.util.*;
+
+public class Solution {
+	/*
+	 * BinaryTreeNode class
+	 * 
+	 * class BinaryTreeNode<T>
+	 * {
+	 * T data;
+	 * BinaryTreeNode<T> left;
+	 * BinaryTreeNode<T> right;
+	 * public BinaryTreeNode(T data)
+	 * {
+	 * this.data = data;
+	 * }
+	 * }
+	 */
+
+	public static void printNodesSumToS(BinaryTreeNode<Integer> root, int s) {
+		// Write your code here
+		if (root == null)
+			return;
+		else {
+			ArrayList<Integer> arr = convertToArray(root);
+			Collections.sort(arr);
+			// for (int i=0;i<arr.size();i++)
+			// {
+			// System.out.print (arr.get(i)+" ");
+			// }
+			// System.out.println();
+			printPairSum(arr, s);
+		}
+
+	}
+
+	private static ArrayList<Integer> convertToArray(BinaryTreeNode<Integer> root) {
+		if (root == null) {
+			ArrayList<Integer> arr = new ArrayList<Integer>();
+			return arr;
+		}
+
+		ArrayList<Integer> currArr = new ArrayList<Integer>();
+		ArrayList<Integer> leftArr = convertToArray(root.left);
+		if (!leftArr.isEmpty()) {
+			currArr.addAll(leftArr);
+		}
+
+		currArr.add(root.data);
+
+		ArrayList<Integer> rightArr = convertToArray(root.right);
+		if (!rightArr.isEmpty()) {
+			currArr.addAll(rightArr);
+		}
+		return currArr;
+	}
+
+	private static void printPairSum(ArrayList<Integer> arr, int s) {
+		int i = 0, j = arr.size() - 1;
+		while (i < j) {
+			int val1 = arr.get(i);
+			int val2 = arr.get(j);
+			if (val1 + val2 > s) {
+				j = j - 1;
+			} else if (val1 + val2 < s) {
+				i = i + 1;
+			} else {
+				System.out.println(val1 + " " + val2);
+				i = i + 1;
+				j = j - 1;
+			}
+
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
