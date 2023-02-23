@@ -1,0 +1,355 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+_____________________-Search In BST---------------------Search In BST------------Search In BST---------------------Search In BST-------------Search In BST_______________
+________________________________________________________________________________________________________________________________________________________________________
+========================================================================================================================================================================
+public class Solution {
+
+	/*
+	 * Binary Tree Node class
+	 * 
+	 * class BinaryTreeNode<T> { T data; BinaryTreeNode<T> left; BinaryTreeNode<T> right;
+	 * 
+	 * public BinaryTreeNode(T data) { this.data = data; } }
+	 */
+
+
+	public static boolean searchInBST(BinaryTreeNode<Integer> root, int k) {
+		
+
+
+
+		//public static boolean searchInBST(BinaryTreeNode<Integer> root, int k) {
+        if (root==null)
+        {
+            return false;
+        }
+        
+        int rootData=root.data;
+        if (k<rootData)
+        {
+            return searchInBST(root.left,k);
+        }
+        else if(k>rootData)
+        {
+            return searchInBST(root.right,k);
+        }
+        else
+        {
+            return true;
+        }
+        
+		
+	}
+}
+
+=======================================================================================================================================================================
+__________________Elements Between K1 and K2_____________-Elements Between K1 and K2_______________-Elements Between K1 and K2______________Elements Between K1 and K2
+______________________________________________________________________________________________________________________________________________________________________
+=======================================================================================================================================================================
+import java.util.*;
+public class Solution {
+
+	/*	Binary Tree Node class 
+	 * 
+	 * 	class BinaryTreeNode<T> {
+			T data;
+			BinaryTreeNode<T> left;
+			BinaryTreeNode<T> right;
+			
+			public BinaryTreeNode(T data) {
+				this.data = data;
+			}
+		}
+		*/
+		
+    	private static ArrayList<Integer> arr = new ArrayList<Integer>();
+    
+        public static void elementsInRangeK1K2(BinaryTreeNode<Integer> root,int k1,int k2)
+        {
+            elementsInRangeK1K2Helper(root,k1,k2);
+            Collections.sort(arr);
+            for (int i:arr)
+                System.out.print(i+" ");
+        }
+		public static void elementsInRangeK1K2Helper(BinaryTreeNode<Integer> root,int k1,int k2){
+            
+            //Base case - if root=null
+            if (root==null)
+                return;
+            
+            int rootData=root.data;
+            if (rootData<k1)
+            {
+                elementsInRangeK1K2Helper(root.right,k1,k2);
+            }
+            else if (rootData>k2)
+            {
+                elementsInRangeK1K2Helper(root.left,k1,k2);
+            }
+            else
+            {
+                //System.out.print(rootData+" ");
+                arr.add(rootData);
+                elementsInRangeK1K2Helper(root.right,k1,k2);
+                elementsInRangeK1K2Helper(root.left,k1,k2);
+            }
+			
+		}
+		
+		
+	}
+ ==================================================================================================================================================================
+ _________Construct BST---------------Construct BST-----------------Construct BST-------------------Construct BST------------Construct BST________________________
+ _________________________________________________________________________________________________________________________________________________________________
+ =================================================================================================================================================================
+ public class Solution {
+
+	/*
+	 * Binary Tree Node class
+	 * 
+	 * class BinaryTreeNode<T> {
+	 * T data;
+	 * BinaryTreeNode<T> left;
+	 * BinaryTreeNode<T> right;
+	 * 
+	 * public BinaryTreeNode(T data) {
+	 * this.data = data;
+	 * }
+	 * }
+	 */
+
+	public static BinaryTreeNode<Integer> SortedArrayToBST(int[] arr, int n) {
+		return SortedArrayToBSTHelper(arr, 0, n - 1);
+
+	}
+
+	public static BinaryTreeNode<Integer> SortedArrayToBSTHelper(int[] arr, int si, int ei) {
+		if (si > ei)
+			return null;
+
+		int mid = (si + ei) / 2;
+		BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(arr[mid]);
+
+		root.left = SortedArrayToBSTHelper(arr, si, mid - 1);
+		root.right = SortedArrayToBSTHelper(arr, mid + 1, ei);
+		return root;
+
+	}
+}
+
+========================================================================================================================================================================
+_________________Assignment------------BST to LL---------------Assignment---------------BST to LL---------Assignment----------BST to LL________________________________
+_______________________________________________________________________________________________________________________________________________________________________
+=======================================================================================================================================================================
+class PassNode<T>
+{
+	T head;
+    T tail;
+}
+public class Solution {
+
+	/*
+	 * Binary Tree Node class
+	 * 
+	 * class BinaryTreeNode<T> { T data; BinaryTreeNode<T> left; BinaryTreeNode<T>
+	 * right;
+	 * 
+	 * public BinaryTreeNode(T data) { this.data = data; } }
+	 */
+
+	/*
+	 * LinkedList Node Class
+	 *
+	 * 
+	 * class LinkedListNode<T> { T data; LinkedListNode<T> next;
+	 * 
+	 * public LinkedListNode(T data) { this.data = data; } }
+	 */
+
+	public static LinkedListNode<Integer> constructLinkedList(BinaryTreeNode<Integer> root) {
+        PassNode<LinkedListNode<Integer>> passNode= constructLinkedListHelper(root);
+        return passNode.head;
+	}
+    
+    public static PassNode<LinkedListNode<Integer>> constructLinkedListHelper(BinaryTreeNode<Integer> root)
+    {
+    	if(root==null)
+        {
+            return new PassNode<LinkedListNode<Integer>>();
+        }
+        
+        if (root.left==null && root.right==null)
+        {
+        	PassNode<LinkedListNode<Integer>> passNode = new PassNode<LinkedListNode<Integer>>();
+        	passNode.head=new LinkedListNode<Integer>(root.data);
+            passNode.tail=null;
+            return passNode;
+        }
+        
+        PassNode<LinkedListNode<Integer>> passNodeLeft = constructLinkedListHelper(root.left);
+        PassNode<LinkedListNode<Integer>> passNodeRight = constructLinkedListHelper(root.right);
+        PassNode<LinkedListNode<Integer>> passNode = new PassNode<LinkedListNode<Integer>>();
+        LinkedListNode<Integer> newNode=new LinkedListNode<Integer>(root.data);
+        
+        if (passNodeLeft.head==null)
+        {
+        	passNode.head=newNode;
+            //passNode.tail=newNode;
+        }
+        else
+        {
+        	passNode.head=passNodeLeft.head;
+        }
+        
+        if(passNodeLeft.tail==null)
+        {
+        	passNode.head.next=newNode;
+            passNode.tail=newNode;
+        }
+        else
+        {
+        	passNodeLeft.tail.next=newNode;
+            passNode.tail=newNode;
+        }
+        
+        if (passNodeRight.head!=null)
+        {
+        	passNode.tail.next=passNodeRight.head;
+            passNode.tail=passNodeRight.head;
+        }
+        
+        if(passNodeRight.tail!=null)
+        {
+        	passNode.tail=passNodeRight.tail;
+        }
+    
+        return passNode;
+   
+    }
+}
+
+=====================================================================================================================================================================
+____________________LCA of BST---------------LCA of BST----------------LCA of BST-----------------LCA of BST-----------------LCA of BST_______________________________
+_____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+public class Solution {
+
+	/*
+	 * Binary Tree Node class
+	 * 
+	 * class BinaryTreeNode<T> { T data; BinaryTreeNode<T> left; BinaryTreeNode<T> right;
+	 * 
+	 * public BinaryTreeNode(T data) { this.data = data; } }
+	 */
+
+
+	
+	public static int getLCA(BinaryTreeNode<Integer> root, int a, int b) {
+
+
+
+		
+	
+		if(root==null) {
+			return -1;
+		}
+		if(a < root.data && b < root.data ) {
+			return getLCA(root.left, a, b);
+		}
+		if(a>root.data && b > root.data) {
+			return getLCA(root.right, a, b);
+		}
+		if(root.data == a || root.data == b) {
+			return root.data;
+		}
+		int leftLca = getLCA(root.left, a, b);
+		int rightLca = getLCA(root.right, a, b);
+		if(leftLca==-1 && rightLca==-1) {
+			return -1;
+		}
+		else if(leftLca==-1) {
+			return rightLca;
+		}
+		else if(rightLca==-1) {
+			return leftLca;
+		}
+		else {
+			return root.data;
+		}
+		
+	}
+}
+=====================================================================================================================================================================
+___________Replace with Sum of greater nodes------------Replace with Sum of greater nodes----------------Replace with Sum of greater nodes__________________________
+____________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+import java.util.*;
+import java.lang.*;
+public class Solution {
+
+	/*
+	 * Binary Tree Node class
+	 * 
+	 * class BinaryTreeNode<T> { T data; BinaryTreeNode<T> left; BinaryTreeNode<T>
+	 * right;
+	 * 
+	 * public BinaryTreeNode(T data) { this.data = data; } }
+	 */
+
+	public static void replaceWithLargerNodesSum(BinaryTreeNode<Integer> root) {
+		// Write your code here
+        replaceWithLargerNodesSum(root,0);
+	}
+
+    public static int replaceWithLargerNodesSum(BinaryTreeNode<Integer> root, int sum)
+    {
+        //Base Case
+        if(root == null)
+			return sum;
+
+		//Recursive Case
+		sum = replaceWithLargerNodesSum(root.right,sum);
+		sum += root.data;
+		root.data = sum;
+		return replaceWithLargerNodesSum(root.left,sum);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
