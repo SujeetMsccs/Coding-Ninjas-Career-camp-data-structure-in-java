@@ -1,0 +1,387 @@
+########################################################################################################################################################################
+__________________________Multiply Two Linked Lists________________________Multiply Two Linked Lists___________________Multiply Two Linked Lists_______________________
+_______________________________________________________________________________________________________________________________________________________________________
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*Linked List Node Class
+
+class LinkedListNode<T> {
+    T data;
+    LinkedListNode<T> next;
+    
+    public LinkedListNode(T data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+*/
+
+public class Solution {
+
+    public static LinkedListNode<Integer> temphead;
+
+    public static int reverse(LinkedListNode<Integer> head) {
+        LinkedListNode<Integer> prev = null;
+        LinkedListNode<Integer> curr = head;
+        int len = 0;
+        LinkedListNode<Integer> ahead = null;
+        while (curr != null) {
+            len++;
+            ahead = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = ahead;
+        }
+
+        head = prev;
+        temphead = head;
+        return len;
+    }
+
+    public static LinkedListNode<Integer> makeEmptyList(int length) {
+        LinkedListNode<Integer> head = null;
+        LinkedListNode<Integer> traverse = null;
+
+        while (length > 0) {
+
+            LinkedListNode<Integer> temp = new LinkedListNode<Integer>(0);
+
+            if (head == null) {
+                head = temp;
+                traverse = temp;
+            } else {
+                traverse.next = temp;
+                traverse = traverse.next;
+
+            }
+            length--;
+        }
+
+        return head;
+    }
+
+    public static LinkedListNode<Integer> multiplyLL(LinkedListNode<Integer> head1, LinkedListNode<Integer> head2) {
+
+        // Reverse the input lists and get their lengths
+        int m = reverse(head1);
+        head1 = temphead;
+        int n = reverse(head2);
+        head2 = temphead;
+
+        // Make a list that will contain the result of multiplication, m+n+1 can be max size of the list
+        LinkedListNode<Integer> result = makeEmptyList(m + n);
+
+        // Pointers for traversing the linked lists
+        LinkedListNode<Integer> secondPtr = head2, resultPtr1 = result, resultPtr2, firstPtr;
+
+        // multiply each Node of second list with first
+        while (secondPtr != null) {
+            int carry = 0;
+
+            // Each time we start from the next of Node from which we started last time
+            resultPtr2 = resultPtr1;
+
+            firstPtr = head1;
+
+            while (firstPtr != null) {
+
+                // Multiply first list's digit with current second list's digit
+                int mul = firstPtr.data * secondPtr.data + carry;
+
+                // Assign the product to corresponding Node of result
+                resultPtr2.data += mul % 10;
+
+                // Resultant Node itself can have more than 1 digit
+                carry = mul / 10 + resultPtr2.data / 10;
+                resultPtr2.data = resultPtr2.data % 10;
+
+                firstPtr = firstPtr.next;
+                resultPtr2 = resultPtr2.next;
+            }
+
+            // If carry is remaining from last multiplication
+            if (carry > 0) {
+                resultPtr2.data += carry;
+            }
+
+            resultPtr1 = resultPtr1.next;
+            secondPtr = secondPtr.next;
+
+        }
+
+        // reverse the result list
+        reverse(result);
+        result = temphead;
+
+        // Remove if there are zeros at starting
+        while (result.next != null && result.data == 0) {
+            LinkedListNode<Integer> temp = result;
+            result = result.next;
+            //free(temp);
+        }
+
+        // Return head of multiplication list
+        return result;
+
+    }
+
+    public static void multiply(LinkedListNode<Integer> head1, LinkedListNode<Integer> head2) {
+        LinkedListNode<Integer> print = multiplyLL(head1, head2);
+        while (print != null) {
+            System.out.print(print.data + " ");
+            print = print.next;
+        }
+    }
+
+}
+======================================================================================================================================================================
+______________________________________Move To Last_______________________________________________Move To Last___________________________Move To Last_________________
+
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/***********
+ 
+Following is the Linked list node structure already written 
+ 
+class Node<T> {
+    public T data;
+    public Node<T> next;
+    public Node(T data) {
+		 this.data=data;
+	 }
+}
+
+************/ 		
+public class Solution {
+
+
+    public static Node<Integer> func(Node<Integer> head,int n) {
+        /* Your class should be named Solution
+         * Don't write main().
+         * Don't read input, it is passed as function argument.
+         * Return output and don't print it.
+         * Taking input and printing output is handled automatically.
+         */
+        if (head==null || head.next==null) return head;
+        Node<Integer> prev = null,curr= head,tail = head;
+        while (tail.next!=null) {
+            tail=tail.next;
+        }
+        Node<Integer> oldTail = tail;
+        while (curr.next!=oldTail){
+            if (curr.data==n){
+                tail.next= new Node<>(n);
+                tail= tail.next;
+                if (prev==null){
+                    curr = curr.next;
+                    head = curr;
+                }else {
+                    prev.next = prev.next.next;
+                    curr = prev.next;
+                }
+            }else {
+                prev = curr;
+                curr = curr.next;
+            }
+        }
+        return head;
+    }
+
+}
+
+
+======================================================================================================================================================================
+____________________Implement the Browser History_________________________Implement the Browser History____________Implement the Browser History______________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+import java.util.Scanner;
+
+public class Runner {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+
+		String input = scn.next();
+
+		BrowserHistory obj = new BrowserHistory (input);
+
+		int choice = scn.nextInt();
+
+		int i = scn.nextInt();
+		while(true){
+			switch(i){
+            			case 1: input=scn.next();
+                    			obj.visit(input);
+                    			break;
+            			case 2: k = scn.nextInt();
+                    			input=obj.back(k);
+                    			System.out.println(input);
+                    			break;
+            			case 3: k = scn.nextInt();
+                    			input=obj.forward(k);
+                    			System.out.println(input);
+                    			break;
+            			default: return;
+        		}
+        		i = scn.nextInt();
+		}
+	}
+}
+*/
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BrowserHistory {
+
+    List<String> list;
+    int total = 0;
+    int curr = 0;
+
+    public BrowserHistory(String homepage) {
+        list = new ArrayList<String>();
+        list.add(homepage);
+        total++;
+        curr++;
+    }
+
+    public void visit(String url) {
+        if (list.size() > curr) {
+            list.set(curr, url);
+        } else {
+            list.add(url);
+        }
+        curr++;
+        total = curr;
+    }
+
+    public String back(int steps) {
+        curr = Math.max(1, curr - steps);
+        return list.get(curr - 1);
+    }
+
+    public String forward(int steps) {
+        curr = Math.min(total, curr + steps);
+        return list.get(curr - 1);
+    }
+
+}
+======================================================================================================================================================================
+_________________________Rotten Oranges_______________________Rotten Oranges______________________Rotten Oranges__________________Rotten Oranges______________________
+______________________________________________________________________________________________________________________________________________________________________
+=======================================================================================================================================================================
+
+
+import java.util.Scanner;
+
+public class Main {
+
+    // Check if i, j is under the array
+// limits of row and column
+    static boolean issafe(int i, int j,int R, int C)
+    {
+        return i >= 0 && i < R &&
+                j >= 0 && j < C;
+    }
+
+    static int rotOranges(int v[][])
+    {
+        boolean changed = false;
+        int no = 2;
+        int R = v.length,C = v[0].length;
+
+        while (true)
+        {
+            for(int i = 0; i < R; i++)
+            {
+                for(int j = 0; j < C; j++)
+                {
+
+                    // Rot all other oranges present at
+                    // (i+1, j), (i, j-1), (i, j+1), (i-1, j)
+                    if (v[i][j] == no)
+                    {
+                        if (issafe(i + 1, j,R,C) &&
+                                v[i + 1][j] == 1)
+                        {
+                            v[i + 1][j] = v[i][j] + 1;
+                            changed = true;
+                        }
+                        if (issafe(i, j + 1,R,C) &&
+                                v[i][j + 1] == 1)
+                        {
+                            v[i][j + 1] = v[i][j] + 1;
+                            changed = true;
+                        }
+                        if (issafe(i - 1, j,R,C) &&
+                                v[i - 1][j] == 1)
+                        {
+                            v[i - 1][j] = v[i][j] + 1;
+                            changed = true;
+                        }
+                        if (issafe(i, j - 1,R,C) &&
+                                v[i][j - 1] == 1)
+                        {
+                            v[i][j - 1] = v[i][j] + 1;
+                            changed = true;
+                        }
+                    }
+                }
+            }
+
+            // If no rotten orange found it means all
+            // oranges rottened now
+            if (!changed)
+                break;
+
+            changed = false;
+            no++;
+        }
+
+        for(int i = 0; i < R; i++)
+        {
+            for(int j = 0; j < C; j++)
+            {
+
+                // If any orange is found to be
+                // not rotten then ans is not possible
+                if (v[i][j] == 1)
+                    return -1;
+            }
+        }
+
+        // Because initial value for a rotten
+        // orange was 2
+        return no - 2;
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt(), m = scanner.nextInt();
+        int[][] arr = new int[n][m];
+        for (int i=0;i<n;i++){
+            for (int j=0;j<m;j++){
+                arr[i][j] = scanner.nextInt();
+            }
+        }
+        System.out.println(rotOranges(arr));
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
