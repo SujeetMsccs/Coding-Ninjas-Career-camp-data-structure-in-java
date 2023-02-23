@@ -1,0 +1,341 @@
+========================================================================================================================================================================
+_________________________Sum Of Nodes____________________________________________________________Sum Of Nodes___________________________________________________________
+________________________________________________________________________________________________________________________________________________________________________
+========================================================================================================================================================================
+/*
+
+	Following is the Binary Tree Node class structure.
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+ */
+
+public class Solution {
+
+	public static int getSum(BinaryTreeNode<Integer> root) {
+		//Your code goes here.
+        if (root==null)
+        {
+            return 0;
+        }
+        int smallSum=getSum(root.left)+getSum(root.right);
+        return root.data+smallSum;
+	}
+
+}
+
+====================================================================================================================================================================
+_______________Preorder Binary Tree____________________Preorder Binary Tree________________________Preorder Binary Tree______________________________________________
+____________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+/*
+	
+	Following the structure used for Binary Tree
+	
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+ */
+
+public class Solution {
+
+	public static void preOrder(BinaryTreeNode<Integer> root) {
+		//Your code goes here
+        if (root==null)
+        {
+            return;
+        }
+        System.out.print(root.data+" ");
+        preOrder(root.left);
+        preOrder(root.right);
+	}
+
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+__________________Postorder Binary Tree___________________Postorder Binary Tree______________Postorder Binary Tree_________________Postorder Binary Tree_____________
+_____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+	
+	Following the structure used for Binary Tree
+	
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+ */
+
+public class Solution {
+
+	public static void postOrder(BinaryTreeNode<Integer> root) {
+		//Your code goes here
+        if (root==null)
+        {
+            return;
+        }
+        postOrder(root.left);
+        postOrder(root.right);
+        System.out.print(root.data+" ");
+	}
+
+}
+
+=====================================================================================================================================================================
+________________Nodes Greater Than X___________________________Nodes Greater Than X__________________Nodes Greater Than X___________________________________________
+____________________________________________________________________________________________________________________________________________________________________
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+ */
+
+public class Solution {
+
+	public static int countNodesGreaterThanX(BinaryTreeNode<Integer> root, int x) {
+		//Your code goes here
+        if (root==null)
+        {
+            return 0;
+        }
+        
+        int smallOutput=countNodesGreaterThanX(root.left,x)+countNodesGreaterThanX(root.right,x);
+        if (root.data>x)
+        {
+            return smallOutput+1;
+        }
+        else
+        {
+            return smallOutput;
+        }
+	}
+
+}
+=======================================================================================================================================================================
+______________________Height Of Tree___________________Height Of Tree_______________________Height Of Tree_________________Height Of Tree____________________________
+______________________________________________________________________________________________________________________________________________________________________
+=======================================================================================================================================================================
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+ */
+public class Solution {
+
+	public static int height(BinaryTreeNode<Integer> root) {
+		//Your code goes here
+        if (root==null)
+        {
+            return 0;
+        }
+        
+        int smallLeftOutput=height(root.left);
+        int smallRightOutput=height(root.right);
+        if (smallLeftOutput>smallRightOutput)
+        {
+            return smallLeftOutput+1;
+        }
+        else
+        {
+            return smallRightOutput+1;
+        }
+	}
+
+}
+
+======================================================================================================================================================================
+____________Replace Node With Depth--------------------Replace Node With Depth------------------Replace Node With Depth-----------Replace Node With Depth_____________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+public class Solution {
+
+	public static void changeToDepthTree(BinaryTreeNode<Integer> root) {
+	    //Your code goes here
+        changeToDepthTree(root,0);
+	}
+    
+    public static void changeToDepthTree(BinaryTreeNode<Integer> root, int depth)
+    {
+        if (root==null)
+        {
+            return;
+        }
+        root.data=depth;
+        changeToDepthTree(root.left,depth+1);
+        changeToDepthTree(root.right,depth+1);
+    }
+
+}
+
+======================================================================================================================================================================
+________________Assignment-----------------------Is Node Present?-----------------Assignment?------------------------Is Node Present?__________________________________
+_______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+public class Solution {
+
+	public static boolean isNodePresent(BinaryTreeNode<Integer> root, int x) {
+		// Your code goes here
+		if (root == null) {
+			return false;
+		}
+
+		if (root.data == x) {
+			return true;
+		} else {
+			return (isNodePresent(root.left, x) || isNodePresent(root.right, x));
+		}
+	}
+
+}
+======================================================================================================================================================================
+_____________________Nodes without sibling-------------Nodes without sibling-------------Nodes without sibling-------------Nodes without sibling______________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+public class Solution {
+
+	public static void printNodesWithoutSibling(BinaryTreeNode<Integer> root) {
+		//Your code goes here
+        if (root==null)
+        {
+            return; 
+        }
+        
+        if (root.left==null && root.right==null)
+        {
+            return;
+        }
+        
+        if (root.left==null)
+        {
+            System.out.print(root.right.data+" ");
+            printNodesWithoutSibling(root.right);
+        }
+        else if (root.right==null)
+        {
+            System.out.print(root.left.data+" ");
+            printNodesWithoutSibling(root.left);
+            
+        }
+        else
+        {
+            printNodesWithoutSibling(root.left);
+            printNodesWithoutSibling(root.right);
+        }
+	}
+
+}
+
+
+
+
+
+
+
+
+
