@@ -1,0 +1,193 @@
+**********************************************************************************************************************************************************************
+------------------------------------Remove X---------------------------------------------------------------Remove X--------------------------------------------------
+**********************************************************************************************************************************************************************
+public class solution {
+
+	// Return the changed string
+	public static String removeX(String s) {
+		// Write your code here
+		if (s.length() == 0) {
+			return s;
+		}
+		if (s.charAt(0) == 'x') {
+			return removeX(s.substring(1));
+		} else {
+			return s.charAt(0) + removeX(s.substring(1));
+		}
+
+	}
+}
+**********************************************************************************************************************************************************************
+-----------------------------------------Remove Duplicates Recursively-----------------------------Remove Duplicates Recursively--------------------------------------
+**********************************************************************************************************************************************************************
+public class Solution {
+
+	public static String removeConsecutiveDuplicates(String s) {
+		// Write your code here
+		
+		if (s.length() == 1){
+			return s;
+		}
+		if (s.charAt(0) ==  s.charAt(1)){
+			return removeConsecutiveDuplicates(s.substring(1));
+		}
+		else{
+			return s.charAt(0)+ removeConsecutiveDuplicates(s.substring(1));
+		}
+	}
+
+}
+
+********************************************************************************************************************************************************************
+------------------------------------------Merge Sort - Problem Statement-----------------------------------Merge Sort - Problem Statement---------------------------
+********************************************************************************************************************************************************************
+public class solution {
+	public static void merge(int arr[], int a[], int b[]) {
+		int x = 0;
+		int i = 0;
+		int j = 0;
+		while (i < a.length && j < b.length) {
+			if (a[i] < b[j]) {
+				arr[x] = a[i];
+				i++;
+				x++;
+			} else if (b[j] < a[i]) {
+				arr[x] = b[j];
+				j++;
+				x++;
+			} else {
+				arr[x] = a[i];
+				i++;
+				x++;
+			}
+		}
+		while (i < a.length) {
+			arr[x] = a[i];
+			i++;
+			x++;
+		}
+		while (j < b.length) {
+			arr[x] = b[j];
+			j++;
+			x++;
+		}
+
+	}
+
+	public static void mergeSort(int[] arr) {
+		// Write your code here
+		if (arr.length <= 1) {
+			return;
+		}
+		int a[] = new int[arr.length / 2];
+		int b[] = new int[arr.length - a.length];
+
+		for (int i = 0; i < arr.length / 2; i++) {
+			a[i] = arr[i];
+		}
+		for (int i = arr.length / 2; i < arr.length; i++) {
+			b[i - arr.length / 2] = arr[i];
+		}
+		mergeSort(a);
+		mergeSort(b);
+		merge(arr, a, b);
+	}
+}
+**********************************************************************************************************************************************************************
+--------------------------------------------------------------Quick Sort - Problem Statement--------------------------------------------------------------------------
+**********************************************************************************************************************************************************************
+/*
+	To apply the method explained in the hint video, we have to add two more parameters in the function call. This can be done by calling a helper function from given 
+  function. The helper function can have three parameters: array, start index, end index.  
+	
+	Skeleton code to achieve this:
+	public class Solution {
+		public static void quickSort(int[] input, int startIndex, int endInedx) {
+			// your code goes here
+		}
+		public static void quickSort(int[] input) {
+			quickSort(input, 0, input.length - 1);
+		}
+	}
+*/
+
+public class Solution {
+	static void swap(int arr[], int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+
+	static int partition(int arr[], int si, int end) {
+		int pivot = arr[si];
+		int count = 0;
+		for (int i = si + 1; i <= end; i++) {
+			if (arr[i] < pivot) {
+				count++;
+			}
+		}
+		// int temp = arr[si+count];
+		// arr[si+count] = pivot;
+		// arr[si] = temp;
+		swap(arr, si, si + count);
+
+		int i = si;
+		int j = end;
+		while (i < j) {
+			if (arr[i] < pivot) {
+				i++;
+			} else if (arr[j] >= pivot) {
+				j--;
+			} else {
+				swap(arr, i, j);
+				i++;
+				j--;
+			}
+		}
+		return count + si;
+	}
+
+	public static void quickSort(int[] arr, int si, int end) {
+		// your code goes here
+		if (si > end) {
+			return;
+		}
+		int m = partition(arr, si, end);
+		quickSort(arr, si, m - 1);
+		quickSort(arr, m + 1, end);
+
+	}
+
+	public static void quickSort(int[] arr) {
+		/*
+		 * Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * No need to print or return the output.
+		 * Taking input and printing output is handled automatically.
+		 */
+		quickSort(arr, 0, arr.length - 1);
+	}
+}
+
+**********************************************************************************************************************************************************************
+------------------------Tower Of Hanoi - Problem Statement------------------------------------------------Tower Of Hanoi - Problem Statement--------------------------
+**********************************************************************************************************************************************************************
+public class solution {
+
+	public static void towerOfHanoi(int disks, char source, char auxiliary, char destination) {
+		// Write your code here
+		if (disks == 0) {
+			return;
+		}
+		if (disks == 1) {
+			System.out.println(source + " " + destination);
+			return;
+		}
+		towerOfHanoi(disks - 1, source, destination, auxiliary);
+		System.out.println(source + " " + destination);
+		towerOfHanoi(disks - 1, auxiliary, source, destination);
+
+	}
+}
+  
