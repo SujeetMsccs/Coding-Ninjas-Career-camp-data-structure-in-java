@@ -1,0 +1,247 @@
+=======================================================================================================================================================================
+____________________Queue Using LL___________________________Queue Using LL___________________Queue Using LL__________________________________________________________
+______________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+/*
+	Following is the structure of the node class for a Singly Linked List
+
+	class Node {
+		int data;
+		Node next;
+
+		public Node(int data) {
+			this.data = data;
+			this.next = null;
+		}
+
+	}
+
+*/
+
+public class Queue {
+	
+	//Define the data members
+    private Node front;
+    private Node rear;
+    private int size;
+
+
+	public Queue() {
+		//Implement the Constructor
+        front=null;
+        rear=null;
+        size=0;
+	}
+	
+
+
+	/*----------------- Public Functions of Stack -----------------*/
+
+
+	public int getSize() { 
+		//Implement the getSize() function
+        return size;
+    }
+
+
+    public boolean isEmpty() { 
+    	//Implement the isEmpty() function
+        return size==0;
+    }
+
+
+    public void enqueue(int data) {
+    	//Implement the enqueue(element) function
+        Node newNode=new Node(data);
+        if (front==null)
+        {
+            front=newNode;
+            rear=newNode;
+        }
+        else
+        {
+            rear.next=newNode;
+            rear=newNode;
+        }
+        size=size+1;
+    }
+
+
+    public int dequeue() {
+    	//Implement the dequeue() function
+        if (front!=null)
+        {
+            int temp=front.data;
+            front=front.next;
+            size=size-1;
+            return temp;
+            
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+
+    public int front() {
+    	//Implement the front() function
+        if (front!=null)
+        {
+            return front.data;
+        }
+        else
+        {
+            return -1;
+        }
+        
+    }
+}
+======================================================================================================================================================================
+_________________________________Stack Using 2 Queues_____________________Stack Using 2 Queues______________Stack Using 2 Queues______________________________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+import java.util.*;
+public class Stack {
+
+    //Define the data members
+    private Queue<Integer> q1;
+    private Queue<Integer> q2;
+    private int size;
+
+
+    public Stack() {
+        //Implement the Constructor
+        q1=new LinkedList<Integer>();
+        q2=new LinkedList<Integer>();
+        size=0;
+    }
+
+
+
+    /*----------------- Public Functions of Stack -----------------*/
+
+
+    public int getSize() { 
+        //Implement the getSize() function
+        return size;
+    }
+
+    public boolean isEmpty() {
+        //Implement the isEmpty() function
+        return size==0;
+    }
+
+    public void push(int element) {
+        //Implement the push(element) function
+        q1.add(element);     
+        size=size+1;
+    }
+
+    public int pop() {
+        //Implement the pop() function
+       if (q1.isEmpty())
+       {
+           return -1;
+       }
+       while(q1.size()!=1)
+       {
+           q2.add(q1.remove());
+       }
+       int top=q1.remove();
+        
+       while(!q2.isEmpty())
+       {
+           q1.add(q2.remove());
+       }
+       size=size-1;
+        return top;
+    }
+
+    public int top() {
+        //Implement the top() function
+        if (q1.isEmpty())
+       {
+           return -1;
+       }
+       while(q1.size()!=1)
+       {
+           q2.add(q1.remove());
+       }
+       int top=q1.peek();
+       q2.add(q1.remove());
+       
+       Queue<Integer> q=q1;
+       q1=q2;
+       q2=q;
+       return top;
+    }
+}
+======================================================================================================================================================================
+_________________________Assignment---------Reverse Queue------------Assignment--------Reverse Queue-----Assignment----Reverse Queue_________________________________
+______________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution {
+
+	public static void reverseQueue(Queue<Integer> input) {
+		//Your code goes here
+        if (input.size()==0 || input.size()==1)
+        {
+            return;
+        }
+        
+        int temp=input.remove();
+        reverseQueue(input);
+        input.add(temp);
+	}
+
+}
+======================================================================================================================================================================
+_______________________Reverse the First K Elements in the Queue----------------Reverse the First K Elements in the Queue__________________________________________
+_____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution {
+
+	public static Queue<Integer> reverseKElements(Queue<Integer> input, int k) 
+    {
+		//Your code goes here
+        if (input.size()>k)
+        {
+            k=k%input.size();
+        }
+        if (k==0 || k==1)
+        {
+            return input;
+        }
+        
+        reverseQueue(input,k);
+        
+        for (int i=0;i<input.size()-k;i++)
+        {
+            input.add(input.remove());
+        }
+        
+        return input;
+        
+	}
+    
+    public static void reverseQueue(Queue<Integer> input, int k) 
+    {
+		//Your code goes here
+        if (input.size()==0 || input.size()==1 || k==0)
+        {
+            return;
+        }
+        
+        int temp=input.remove();
+        reverseQueue(input,k-1);
+        input.add(temp);
+	}
+
+}
