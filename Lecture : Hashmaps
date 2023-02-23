@@ -1,0 +1,421 @@
+========================================================================================================================================================================
+_________________Longest subarray zero sum------------Longest subarray zero sum------------Longest subarray zero sum------------Longest subarray zero sum_______________
+________________________________________________________________________________________________________________________________________________________________________
+=========================================================================================================================================================================
+import java.util.HashMap;
+
+public class Solution {
+
+	public static int lengthOfLongestSubsetWithZeroSum(int arr[]) {
+		// Write your code here
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int sum = 0, maxLen = -1;
+		for (int i = 0; i < arr.length; i++) {
+			sum = sum + arr[i];
+			// System.out.println("Current cumulative sum: "+sum);
+			if (sum == 0) {
+				maxLen = i + 1;
+			}
+			if (map.containsKey(sum)) {
+				int prevIndex = map.get(sum);
+				// System.out.println("Sum found previously at index: "+prevIndex);
+				int currLen = i - prevIndex;
+				// System.out.println("Length of 0 sum: "+currLen);
+				if (currLen > maxLen) {
+					maxLen = currLen;
+					// System.out.println("Max Length of 0 sum: "+maxLen);
+				}
+			} else {
+				// System.out.println("Adding sum to HashMap");
+				map.put(sum, i);
+			}
+			// System.out.println();
+		}
+		return maxLen;
+	}
+}
+
+======================================================================================================================================================================
+_____________Maximum Frequency Number--------------Maximum Frequency Number--------------Maximum Frequency Number--------------Maximum Frequency Number_______________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+import java.util.HashMap;
+public class Solution {
+
+	public static int maxFrequencyNumber(int[] arr) {
+		/*
+		 * Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+		 * Taking input and printing output is handled automatically.
+		 */
+		HashMap<Integer, Integer> countMap = new HashMap<>();
+
+		for (int i = 0; i < arr.length; i++) {
+			int ele = arr[i];
+			if (countMap.containsKey(ele)) {
+				countMap.put(ele, countMap.get(ele) + 1);
+			} else {
+				countMap.put(ele, 1);
+			}
+
+		}
+
+		int maxCount = Integer.MIN_VALUE, maxEle = arr[0];
+		for (int i = 0; i < arr.length; i++) {
+			if (countMap.get(arr[i]) > maxCount) {
+				maxCount = countMap.get(arr[i]);
+				maxEle = arr[i];
+			}
+		}
+		return maxEle;
+	}
+}
+=====================================================================================================================================================================
+____________Print Intersection------------Print Intersection----------------Print Intersection--------------Print Intersection----Print Intersection_________________
+_____________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+import java.util.*;
+public class Solution {
+
+	public static void intersection(int[] arr1, int[] arr2) {
+		// Your code goes here
+		HashMap<Integer, Integer> map = new HashMap<>();
+
+		for (int key : arr1) {
+			if (map.containsKey(key)) {
+				map.put(key, map.get(key) + 1);
+			} else {
+				map.put(key, 1);
+			}
+
+		}
+		Arrays.sort(arr2);
+		for (int key : arr2) {
+			if (map.containsKey(key)) {
+				int val = map.get(key);
+				if (val > 0) {
+					System.out.print(key + " ");
+					map.put(key, val - 1);
+				}
+
+			}
+		}
+	}
+}
+======================================================================================================================================================================
+________________Pair Sum to 0-------------Pair Sum to 0--------------------Pair Sum to 0-------------------Pair Sum to 0------------Pair Sum to 0______________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+import java.util.*;
+public class Solution {
+	public static int PairSum(int[] input, int size) {
+		/*
+		 * Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+		 * Taking input and printing output is handled automatically.
+		 */
+		if (size == 0)
+			return 0;
+
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (int key : input) {
+			if (map.containsKey(key)) {
+				map.put(key, map.get(key) + 1);
+			} else {
+				map.put(key, 1);
+			}
+		}
+		/*
+		 * for (Integer i: map.keySet())
+		 * {
+		 * System.out.println(i + ": " + map.get(i));
+		 * }
+		 * System.out.println();
+		 */
+		int countPairs = 0;
+		for (Integer i : map.keySet()) {
+			if (map.containsKey(-i) && i != 0) {
+				// System.out.println("Found the negative of " + i);
+				countPairs = countPairs + (map.get(i) * map.get(-i));
+				// System.out.println("Current count of pairs: "+countPairs);
+				// map.remove(i);
+			}
+			// System.out.println();
+		}
+		countPairs = countPairs / 2;
+		if (map.containsKey(0)) {
+			int val = map.get(0);
+			countPairs = countPairs + (val * (val - 1)) / 2;
+		}
+		return countPairs;
+	}
+}
+
+=====================================================================================================================================================================
+____________Assignment------Extract Unique characters-----------------Assignment--------Extract Unique characters----------Extract Unique characters________________
+____________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+import java.util.HashMap;
+
+public class Solution {
+
+	public static String uniqueChar(String str) {
+		/*
+		 * Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+		 * Taking input and printing output is handled automatically.
+		 */
+		HashMap<Character, Integer> map = new HashMap<>();
+		String newstr = "";
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (map.containsKey(c)) {
+				map.put(c, map.get(c) + 1);
+			} else {
+				newstr = newstr + c;
+				map.put(c, 1);
+			}
+		}
+		return newstr;
+	}
+}
+
+======================================================================================================================================================================
+________Longest Consecutive Sequence-----------Longest Consecutive Sequence-------------Longest Consecutive Sequence-----------Longest Consecutive Sequence___________
+______________________________________________________________________________________________________________________________________________________________________
+=======================================================================================================================================================================
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+
+public class Solution {
+	public static ArrayList<Integer> longestConsecutiveIncreasingSequence(int[] arr) {
+		/* Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+	 	 * Taking input and printing output is handled automatically.
+		*/
+        ArrayList<Integer> output = new ArrayList<>();
+        HashMap<Integer, Boolean> map = new HashMap<>();
+        HashMap<Integer, Integer> lenMap = new HashMap<>();
+        for (int i=0;i<arr.length;i++)
+        {
+            map.put(arr[i],true);
+        }
+        int maxStart=-1,maxLen=0;
+        boolean startCheck=true;
+        
+        for (int i: arr)
+        {
+            if (map.get(i))
+            {
+                int currStart=i,currLen=1;
+                //System.out.println("Current start of sequence: "+currStart);
+                //System.out.println("Current length of sequence: "+currLen);
+                boolean flag=true;
+                map.put(i,false);
+                
+                int ahead=i+1;
+                //System.out.println("Checking for values ahead");
+                //System.out.println();
+                while(flag)
+                {
+                    if(map.containsKey(ahead))
+                    {
+                        //System.out.println(ahead+" is included in sequence and status updates to false");
+                        currLen=currLen+1;
+                        map.put(ahead,false);
+                        ahead=ahead+1;
+                        //System.out.println("Current length of sequence: "+currLen);
+                    }
+                    else
+                    {
+                     	flag=false;   
+                    }
+                }
+               flag=true; 
+               int before=i-1;
+               //System.out.println();
+               //System.out.println("Checking for values before");
+                while(flag)
+                {
+                    if(map.containsKey(before))
+                    {
+                        //System.out.println(before+" is included in sequence and status updates to false");
+                        currLen=currLen+1;
+                        currStart=before;
+                        map.put(before,false);
+                        before=before-1;
+                        //System.out.println("Current length of sequence: "+currLen);
+                    }
+                    else
+                    {
+                     	flag=false;   
+                    }
+                }
+               
+               System.out.println();
+               if (currLen>=maxLen)
+               {
+                   maxLen=currLen;
+                   maxStart=currStart;   
+                   lenMap.put(maxStart,maxLen); 
+               }
+            }
+            /*
+            else
+            {
+                System.out.println("Element already considered in previous sequence");
+            }
+            System.out.println();
+            */
+        }
+        
+        //System.out.println("Current start point and length: "+ maxStart+", "+maxLen);
+        /*
+        for (Integer i: lenMap.keySet())
+        {
+            System.out.println(i+": "+lenMap.get(i));
+        }
+        System.out.println();
+        */
+        
+        
+        for (int i=0;i<arr.length;i++)
+        {
+            if (lenMap.containsKey(arr[i]) && lenMap.get(arr[i])>=maxLen)
+            {
+                maxStart=arr[i];
+                maxLen=lenMap.get(arr[i]);
+                break;
+            }
+        }
+        output.add(maxStart);
+        output.add(maxStart+maxLen-1);
+        return output;
+    }
+}
+
+======================================================================================================================================================================
+___________Pairs with difference K---------------Pairs with difference K-------------------Pairs with difference K-------Pairs with difference K_____________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+import java.util.HashMap;
+
+public class Solution {
+
+	public static int getPairsWithDifferenceK(int arr[], int k) {
+		// Write your code here
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (int key : arr) {
+			if (map.containsKey(key)) {
+				map.put(key, map.get(key) + 1);
+			} else {
+				map.put(key, 1);
+			}
+		}
+		/*
+		 * for (Integer i: map.keySet())
+		 * {
+		 * System.out.println(i + ": " + map.get(i));
+		 * }
+		 * System.out.println();
+		 */
+		int countPairs = 0;
+		if (k == 0) {
+			for (Integer i : map.keySet()) {
+				int val = map.get(i);
+				countPairs = countPairs + (val * (val - 1)) / 2;
+			}
+			return countPairs;
+		}
+
+		for (Integer i : map.keySet()) {
+			// System.out.println("Current element: "+i);
+			// System.out.println("Need to find: "+(i-k)+", "+(i+k));
+			if (map.containsKey(k + i)) {
+				// System.out.println("Found " + (k+i));
+				countPairs = countPairs + (map.get(i) * map.get(k + i));
+				// System.out.println("Current count of pairs: "+countPairs);
+			}
+			if (map.containsKey(i - k)) {
+				// System.out.println("Found " + (i-k));
+				countPairs = countPairs + (map.get(i) * map.get(i - k));
+				// System.out.println("Current count of pairs: "+countPairs);
+			}
+			// System.out.println();
+		}
+		countPairs = countPairs / 2;
+		return countPairs;
+	}
+}
+=====================================================================================================================================================================
+__________Longest subarray zero sum------------Longest subarray zero sum--------------Longest subarray zero sum--------------Longest subarray zero sum_______________
+____________________________________________________________________________________________________________________________________________________________________
+=======================================================================================================================================================================
+import java.util.HashMap;
+
+public class Solution {
+
+	public static int lengthOfLongestSubsetWithZeroSum(int arr[]) {
+		// Write your code here
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int sum = 0, maxLen = -1;
+		for (int i = 0; i < arr.length; i++) {
+			sum = sum + arr[i];
+			// System.out.println("Current cumulative sum: "+sum);
+			if (sum == 0) {
+				maxLen = i + 1;
+			}
+			if (map.containsKey(sum)) {
+				int prevIndex = map.get(sum);
+				// System.out.println("Sum found previously at index: "+prevIndex);
+				int currLen = i - prevIndex;
+				// System.out.println("Length of 0 sum: "+currLen);
+				if (currLen > maxLen) {
+					maxLen = currLen;
+					// System.out.println("Max Length of 0 sum: "+maxLen);
+				}
+			} else {
+				// System.out.println("Adding sum to HashMap");
+				map.put(sum, i);
+			}
+			// System.out.println();
+		}
+		return maxLen;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
