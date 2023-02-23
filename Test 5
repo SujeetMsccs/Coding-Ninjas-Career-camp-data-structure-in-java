@@ -1,0 +1,285 @@
+=========================================================================================================================================================================
+________________________________Matrix Class_________________Matrix Class________________________Matrix Class_________________________________________________________-
+______________________________________________________________________________________________________________________________________________________________________
+=========================================================================================================================================================================
+/* Signature of four required functions is given in the code. You can create other functions as well if you need.
+*  Also you should submit your code even if you are not done with all the functions. 
+*/
+
+public class mat{
+    int [][] matrix;
+
+    mat(int [][] mat)
+    {
+        matrix=mat;
+    }
+
+
+    public static mat add(mat a, mat b)
+    {
+        if (a.matrix.length==0) 
+        return null;
+        int[][] c = new int[a.matrix.length][a.matrix[0].length];
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                c[i][j]=a.matrix[i][j]+b.matrix[i][j];    //use - for subtraction
+            }
+        }
+        return new mat(c);
+    }
+
+    public static int[][] matrixMultiplication(
+            int[][] matrix1, int rows1, int cols1,
+            int[][] matrix2, int rows2, int cols2)
+            throws Exception
+    {
+
+        // Required condition for matrix multiplication
+        if (cols1 != rows2) {
+            throw new Exception("Invalid matrix given.");
+        }
+
+        // create a result matrix
+        int resultMatrix[][] = new int[rows1][cols2];
+
+        // Core logic for 2 matrices multiplication
+        for (int i = 0; i < resultMatrix.length; i++)
+        {
+            for (int j = 0;
+                 j < resultMatrix[i].length;
+                 j++)
+            {
+                for (int k = 0; k < cols1; k++)
+                {
+                    resultMatrix[i][j]
+                            += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+        return resultMatrix;
+    }
+    public static mat multiply(mat a,mat b){
+        if (a.matrix.length == 0||b.matrix.length==0) return null;
+        try {
+            return new mat(matrixMultiplication(a.matrix,a.matrix.length,a.matrix[0].length,b.matrix,b.matrix.length,b.matrix[0].length));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public static mat transpose(mat m)
+    {
+        if (m.matrix.length==0) return null;
+        int[][] B = new int[m.matrix[0].length][m.matrix.length];
+        int i, j;
+        for (i = 0; i < m.matrix[0].length; i++)
+            for (j = 0; j < m.matrix.length; j++)
+                B[i][j] = m.matrix[j][i];
+        
+        return new mat(B);
+    }
+    public static mat rotate(mat m)
+    {
+        int [][] matrix = m.matrix;
+        int n = matrix.length;
+        if (n == 1) {
+            return null;
+        }
+        for (int k=0;k<3;k++){
+            for (int i = 0; i < n / 2; i++) {
+                for (int j = i; j < n - 1 - i; j++) {
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[n - 1 - j][i];
+                    matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                    matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                    matrix[j][n - 1 - i] = temp;
+                }
+            }
+        }
+        return new mat(matrix);
+    }
+    public  void print()
+    {
+        for(int i=0;i<matrix.length;i++)
+        {
+            for(int j=0;j<matrix[0].length;j++)
+            {
+                System.out.print(matrix[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+}
+=====================================================================================================================================================================
+_________________________Next Number________________________________Next Number__________________________________Next Number_________________________________________
+______________________________________________________________________________________________________________________________________________________________________
+======================================================================================================================================================================
+/*************** 
+ * Following is the Node class already written 
+class LinkedListNode<T> {
+	T data;
+	LinkedListNode<T> next;
+
+	public LinkedListNode(T data) {
+		this.data = data;
+	}
+}
+ ***************/
+
+public class Solution {
+
+
+    public static LinkedListNode<Integer> nextLargeNumber(LinkedListNode<Integer> head) {
+        LinkedListNode<Integer> last = null;
+        LinkedListNode<Integer> cur = head;
+
+        // Iterate till the last node
+        while (cur.next != null) {
+            if (cur.data != 9) {
+                last = cur;
+            }
+            cur = cur.next;
+        }
+
+        // If last node is not equal to 9
+        // add 1 to it and return the head
+        if (cur.data != 9) {
+            cur.data++;
+            return head;
+        }
+
+        // If list is of the type 9 . 9 . 9 ...
+        if (last == null) {
+            last = new LinkedListNode<>(0);
+            last.next = head;
+            head = last;
+        }
+
+        // For cases when the rightmost node which
+        // is not equal to 9 is not the last
+        // node in the linked list
+        last.data++;
+        last = last.next;
+
+        while (last != null) {
+            last.data = 0;
+            last = last.next;
+        }
+        return head;
+    }
+}
+====================================================================================================================================================================
+___________________________Sort Linked List________________________________Sort Linked List__________________________Sort Linked List________________________________
+____________________________________________________________________________________________________________________________________________________________________
+=====================================================================================================================================================================
+public class Solution {
+
+	public static LinkedListNode<Integer> midPoint(LinkedListNode<Integer> slow,LinkedListNode<Integer> fast){
+        //Your code goes here
+        if (slow==null) return null;
+        if (fast.next == null || fast.next.next==null) return slow;
+        return midPoint(slow.next,fast.next.next);
+    }
+
+    public static LinkedListNode<Integer> midPoint(LinkedListNode<Integer> head) {
+        //Your code goes here
+        return midPoint(head,head);
+    }
+
+    public static LinkedListNode<Integer> mergeTwoSortedLinkedLists(LinkedListNode<Integer> A, LinkedListNode<Integer> B) {
+        //Your code goes here
+        if(A == null) return B;
+        if(B == null) return A;
+
+        if(A.data < B.data)
+        {
+            A.next = mergeTwoSortedLinkedLists(A.next, B);
+            return A;
+        }
+        else
+        {
+            B.next = mergeTwoSortedLinkedLists(A, B.next);
+            return B;
+        }
+    }
+
+    public static LinkedListNode<Integer> sort(LinkedListNode<Integer> head) {
+        //Your code goes here
+        if (head==null || head.next == null) return head;
+        LinkedListNode<Integer> midPoint = midPoint(head);
+        LinkedListNode<Integer> part1 = sort(midPoint.next);
+        midPoint.next = null;
+        LinkedListNode<Integer> part2 = sort(head);
+        return mergeTwoSortedLinkedLists(part1,part2);
+    }
+
+}
+=======================================================================================================================================================================
+___________________________Replace duplicate values________________________________Replace duplicate values___________________________________________________________
+_____________________________________________________________________________________________________________________________________________________________________
+=======================================================================================================================================================================
+/******** 
+Following is the structure of Linked list node
+class LinkedListNode<T> {
+	public T data;
+	public LinkedListNode<T> next;
+
+	public LinkedListNode(T data) {
+		this.data = data;
+		this.next = null;
+	}
+}
+*********/
+import java.util.HashMap;
+import java.util.Map;
+
+public class solution {
+
+    public static void changeLL(LinkedListNode<Integer> head) {
+        // Write your code here
+        Map<Integer, Integer> mymap = new HashMap<>();
+
+        LinkedListNode<Integer> temp = head;
+
+        // variable to store the maximum number
+        // in linked list
+        int maxNum = 0;
+
+        // traverse the linked list to store
+        // the frequency of every number and
+        // find the maximum integer
+        while (temp != null)
+        {
+            mymap.put(temp.data,(mymap.get(temp.data) ==
+                    null?0:mymap.get(temp.data))+1);
+            if (maxNum < temp.data)
+                maxNum = temp.data;
+            temp = temp.next;
+        }
+
+        // Traverse again the linked list
+        while (head != null)
+        {
+
+           
+            if (mymap.get(head.data) > 1)
+                mymap.put(head.data, -1);
+
+                // -1 means number has occurred
+                // before change its value
+            else if (mymap.get(head.data) == -1)
+                head.data = ++maxNum;
+
+            head = head.next;
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
