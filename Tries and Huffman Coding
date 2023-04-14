@@ -1,0 +1,620 @@
+************************************************************************************************************************************************************************
+
+
+
+Code: Search word in Trie                       Code: Search word in Trie                      Code: Search word in Trie              Code: Search word in Trie
+
+
+
+========================================================================================================================================================================
+
+
+class TrieNode {
+
+	char data;
+	boolean isTerminating;
+	TrieNode children[];
+	int childCount;
+
+	public TrieNode(char data) {
+		this.data = data;
+		isTerminating = false;
+		children = new TrieNode[26];
+		childCount = 0;
+	}
+}
+
+public class Trie {
+
+	private TrieNode root;
+	public int count;
+
+	public Trie() {
+		root = new TrieNode('\0');
+		count = 0;
+	}
+
+	private boolean add(TrieNode root, String word) {
+		if (word.length() == 0) {
+			if (!root.isTerminating) {
+				root.isTerminating = true;
+				return true;
+			} else {
+				return false;
+			}
+		}
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		if (child == null) {
+			child = new TrieNode(word.charAt(0));
+			root.children[childIndex] = child;
+			root.childCount++;
+		}
+		return add(child, word.substring(1));
+
+	}
+
+	public void add(String word) {
+		if (add(root, word)) {
+			this.count++;
+		}
+	}
+
+	public boolean search(String word) {
+		return search(root, word);
+	}
+
+	private boolean search(TrieNode root, String word) {
+		if (word.length() == 0) {
+			if (root.isTerminating == true)
+				return true;
+			else
+				return false;
+		}
+		boolean ans = false;
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		// if(child==null)
+		// return false;
+		if (child != null)
+			ans = search(child, word.substring(1));
+		return ans;
+
+	}
+
+}
+
+
+
+
+======================================================================================================================================================================
+
+
+Count Words in Trie                      Count Words in Trie                           Count Words in Trie                             Count Words in Trie
+
+
+======================================================================================================================================================================
+
+class TrieNode {
+	char data;
+	boolean isTerminating;
+	TrieNode children[];
+	int childCount;
+
+	public TrieNode(char data) {
+		this.data = data;
+		isTerminating = false;
+		children = new TrieNode[26];
+		childCount = 0;
+	}
+}
+
+public class Trie {
+
+	private TrieNode root;
+	private int numWords;
+
+	public Trie() {
+		root = new TrieNode('\0');
+		numWords = 0;
+	}
+
+	public boolean search(String word) {
+		return search(root, word);
+	}
+
+	private boolean search(TrieNode root, String word) {
+		if (word.length() == 0) {
+			return root.isTerminating;
+		}
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		if (child == null) {
+			return false;
+		}
+		return search(child, word.substring(1));
+	}
+
+	public void remove(String word) {
+		if (remove(root, word)) {
+			numWords--;
+		}
+	}
+
+	private boolean remove(TrieNode root, String word) {
+		if (word.length() == 0) {
+			if (root.isTerminating) {
+				root.isTerminating = false;
+				return true;
+			} else {
+				return false;
+			}
+		}
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		if (child == null) {
+			return false;
+		}
+		boolean ans = remove(child, word.substring(1));
+		// We can remove child node only if it is non terminating and its number of
+		// children are 0
+
+		if (!child.isTerminating && child.childCount == 0) {
+			root.children[childIndex] = null;
+			child = null;
+			root.childCount--;
+		}
+		return ans;
+	}
+
+	private boolean add(TrieNode root, String word) {
+		if (word.length() == 0) {
+			if (root.isTerminating) {
+				return false;
+			} else {
+				root.isTerminating = true;
+				return true;
+			}
+		}
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		if (child == null) {
+			child = new TrieNode(word.charAt(0));
+			root.children[childIndex] = child;
+			root.childCount++;
+		}
+		return add(child, word.substring(1));
+	}
+
+	public void add(String word) {
+		if (add(root, word)) {
+			numWords++;
+		}
+	}
+
+	public int countWords() {
+		return numWords;
+
+	}
+
+}
+=====================================================================================================================================================================
+
+
+
+
+Assignment                     Assignment                    Assignment                       Assignment                      Assignment            Assignment
+
+
+
+===================================================================================================================================================================
+Pattern Matching                        Pattern Matching                                Pattern Matching                            Pattern Matching
+
+
+
+======================================================================================================================================================================
+
+
+
+import java.util.ArrayList;
+
+class TrieNode {
+	char data;
+	boolean isTerminating;
+	TrieNode children[];
+	int childCount;
+
+	public TrieNode(char data) {
+		this.data = data;
+		isTerminating = false;
+		children = new TrieNode[26];
+		childCount = 0;
+	}
+}
+
+public class Trie {
+	private TrieNode root;
+
+	public Trie() {
+		root = new TrieNode('\0');
+	}
+
+	private void add(TrieNode root, String word) {
+		if (word.length() == 0) {
+			root.isTerminating = true;
+			return;
+		}
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		if (child == null) {
+			child = new TrieNode(word.charAt(0));
+			root.children[childIndex] = child;
+			root.childCount++;
+		}
+		add(child, word.substring(1));
+	}
+
+	public void add(String word) {
+		add(root, word);
+	}
+
+	
+	public boolean patternMatching(ArrayList<String> input, String pattern) {
+		for (int i = 0; i < input.size(); i++) {
+			String word = input.get(i);
+			for (int j = 0; j < word.length(); j++) {
+				add(word.substring(j));
+			}
+		}
+		
+		return search(root, pattern);
+	}
+
+	private boolean search(TrieNode root, String pattern) {
+		if (pattern.length() == 0)
+			return true;
+		int childIndex = pattern.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		if (child == null)
+			return false;
+		return search(child, pattern.substring(1));
+
+	}
+
+}
+
+
+===========================================================================================================================================================
+
+
+Palindrome Pair                                     Palindrome Pair                                       Palindrome Pair                      Palindrome Pair
+
+
+
+
+==================================================================================================================================================================
+
+
+
+
+import java.util.ArrayList;
+
+class TrieNode {
+	char data;
+	boolean isTerminating;
+	TrieNode children[];
+	int childCount;
+
+	public TrieNode(char data) {
+		this.data = data;
+		isTerminating = false;
+		children = new TrieNode[26];
+		childCount = 0;
+	}
+}
+
+public class Trie {
+
+	private TrieNode root;
+	public int count;
+
+	public Trie() {
+		root = new TrieNode('\0');
+	}
+
+	private void add(TrieNode root, String word){
+		if(word.length() == 0){
+			root.isTerminating = true;
+			return;
+		}		
+
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+
+		if(child == null) {
+			child = new TrieNode(word.charAt(0));
+			root.children[childIndex] = child;
+			root.childCount++;
+		}
+
+		add(child, word.substring(1));
+	}
+
+	public void add(String word){
+		add(root, word);
+	}
+
+	private boolean search(TrieNode root, String word) {
+		if(word.length() == 0) {
+			return true;
+		}
+
+		int childIndex=word.charAt(0) - 'a';
+		TrieNode child=root.children[childIndex];
+
+		if(child == null) {
+			return false;
+		}
+
+		return search(child,word.substring(1));
+
+	}
+
+	public boolean search(String word) {
+		return search(root,word);
+	}
+
+	private void print(TrieNode root, String word) {
+		if (root == null) {
+			return;
+		}
+		
+		if (root.isTerminating) {
+			System.out.println(word);
+		}
+		
+		for (TrieNode child : root.children) {
+			if (child == null) {
+				continue;
+			}
+			String fwd = word + child.data;
+			print(child, fwd);
+		}
+	}
+	
+	public void print() {
+		print(this.root, "");
+	}
+
+
+
+
+
+	/*..................... Palindrome Pair................... */
+
+
+	
+	public String reverse(String word) {
+		
+		String xString="";
+		for(int i=word.length()-1;i>=0;i--) {
+			xString+=word.charAt(i);
+		}
+		return xString;
+		
+	}
+	public boolean isPalindromePair(ArrayList<String> words) {
+		
+		for(int i=0;i<words.size();i++) {
+			
+			String string = reverse(words.get(i));
+			
+			Trie suffixTrie = new Trie();
+			for(int j=0;j<string.length();j++) {
+				suffixTrie.add(string.substring(j));
+			}
+			for(String word : words) {
+				if(suffixTrie.search(word)) {
+					return true;
+				}
+			}
+			
+			
+		}
+		return false;
+		
+	}
+
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+=========================================================================================================================================================================
+
+
+
+
+Auto complete                             Auto complete                          Auto complete                         Auto complete                      Auto complete
+
+
+
+=======================================================================================================================================================================
+
+import java.util.ArrayList;
+
+class TrieNode{
+	char data;
+	boolean isTerminating;
+	TrieNode children[];
+	int childCount;
+
+	public TrieNode(char data) {
+		this.data = data;
+		isTerminating = false;
+		children = new TrieNode[26];
+		childCount = 0;
+	}
+}
+
+public class Trie {
+	private TrieNode root;
+	public int count;
+	public Trie() {
+		root = new TrieNode('\0');
+	}
+
+	private void add(TrieNode root, String word){
+		if(word.length() == 0){
+			root.isTerminating = true;
+			return;
+		}		
+		int childIndex = word.charAt(0) - 'a';
+		TrieNode child = root.children[childIndex];
+		if(child == null){
+			child = new TrieNode(word.charAt(0));
+			root.children[childIndex] = child;
+			root.childCount++;
+		}
+		add(child, word.substring(1));
+	}
+
+	public void add(String word){
+		add(root, word);
+	}
+	
+	public static void print(TrieNode root,String output)
+	{
+		if(root == null)
+			return;
+		output+=root.data;
+		if(root.isTerminating)
+			System.out.println(output);
+		for(int i=0;i<26;i++)
+		{
+			print(root.children[i],output);
+		}
+	}
+	public void autoComplete(ArrayList<String> input, String word) {
+		
+        for(int i=0;i<input.size();i++)
+        {
+            add(input.get(i));
+        }
+       
+        int flag = 0;
+        TrieNode temp = root;
+        int index = 0;
+        TrieNode outer = root;
+        for(int i=0;i<word.length();i++)
+        {
+        	index = word.charAt(i) - 'a';
+        	if(temp.children[index]!=null)
+        	{
+        		outer = temp;
+        		temp = temp.children[index];
+        	}
+        	else
+        	{
+        		flag = 1;
+        		break;
+        	}
+        }
+        if(flag == 1)
+        	return;
+        index = word.charAt(0)-'a';
+        print(temp,word.substring(0,word.length()-1));
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+  
+                               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
