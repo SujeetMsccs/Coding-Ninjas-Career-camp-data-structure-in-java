@@ -1,0 +1,374 @@
+************************************************************************************************************************************************************/***********
+
+
+
+Inplace Heap Sort                   Inplace Heap Sort                         Inplace Heap Sort                       Inplace Heap Sort         Inplace Heap Sort
+
+
+=======================================================================================================================================================================
+
+
+public class Solution {
+
+	public static void inplaceHeapSort(int arr[]) {
+		/* Your class should be named Solution
+		* Don't write main().
+		* Don't read input, it is passed as function argument.
+		* Change in the given input itself.
+		* Taking input and printing output is handled automatically.
+		*/
+		//Find length of arr
+		int n=arr.length;
+		//Step 1 - Build heap using optimized method with time complexity O(n)
+		for(int i=(n/2)-1;i>=0;i--)
+		{
+			//Perform down-heapfiy operation for node at index i, starting at index i and going to down to the last node (end of arr)
+			downHeapify(arr,i,n);
+		}
+		
+		//Step 2 - Perform remove minimum element, put them at respective last position in the heap and heap re-balancing until all the elements are out of the heap
+		for(int i=n-1;i>=0;i--)
+		{
+			int temp=arr[i];
+			arr[i]=arr[0];
+			arr[0]=temp;
+			
+			//Apply down-heapify from index 0 to index i
+			downHeapify(arr,0,i);
+		}
+	}
+    
+    //Down-heapify for min. heap order property
+	private static void downHeapify(int[] arr, int i, int n)
+	{
+		int parentIndex=i;
+		int leftChildIndex=2*parentIndex+1, rightChildIndex=2*parentIndex+2;
+		
+		while(leftChildIndex<n)
+		{
+			int minIndex=parentIndex;
+			if(arr[minIndex]>arr[leftChildIndex])
+				minIndex=leftChildIndex;
+			
+			if(rightChildIndex<n && arr[minIndex]>arr[rightChildIndex])
+				minIndex=rightChildIndex;
+			
+			if(minIndex==parentIndex)
+				return;
+			
+			int temp=arr[parentIndex];
+			arr[parentIndex]=arr[minIndex];
+			arr[minIndex]=temp;
+			
+			parentIndex=minIndex;
+			leftChildIndex=2*parentIndex+1;
+			rightChildIndex=2*parentIndex+2;
+			
+		}
+	}
+    
+}  
+
+
+====================================================================================================================================================================
+
+K Largest Elements                    K Largest Elements               K Largest Elements                            K Largest Elements          K Largest Elements
+
+
+
+
+======================================================================================================================================================================
+
+
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+public class Solution {
+
+	public static ArrayList<Integer> kLargest(int input[], int k) {
+		/* Your class should be named Solution
+		* Don't write main().
+		* Don't read input, it is passed as function argument.
+		* Return output and don't print it.
+		* Taking input and printing output is handled automatically.
+		*/
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+        for(int i=0;i<k;i++)
+        {
+            pq.add(input[i]);
+        }
+        
+        for(int i=k;i<input.length;i++)
+        {
+            int minVal=pq.peek();
+            if(minVal<input[i])
+                minVal=input[i];
+            if(minVal!=pq.peek())
+            {
+                pq.poll();
+                pq.add(minVal);
+            }
+        }
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        while(!pq.isEmpty())
+            arr.add(pq.poll());
+        return arr;
+		
+	}
+}
+
+
+
+**********************************************************************************************************************************************************************
+
+
+K Smallest Elements                   K Smallest Elements                             K Smallest Elements                       K Smallest Elements         K Smallest Elements
+
+
+
+======================================================================================================================================================================
+
+
+import java.util.ArrayList;
+import java.util.*;
+
+public class Solution {
+
+	public static ArrayList<Integer> kSmallest(int n, int[] input, int k) {
+		// Write your code here
+		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
+		for (int i = 0; i < k; i++) {
+			pq.add(input[i]);
+		}
+
+		for (int i = k; i < input.length; i++) {
+			int maxVal = pq.peek();
+			if (maxVal > input[i])
+				maxVal = input[i];
+			if (maxVal != pq.peek()) {
+				pq.poll();
+				pq.add(maxVal);
+			}
+		}
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		while (!pq.isEmpty())
+			arr.add(pq.poll());
+		return arr;
+
+	}
+}
+
+======================================================================================================================================================================
+
+
+Assignment      Assignment                                          Assignment                                          Assignment            Assignment
+
+
+======================================================================================================================================================================
+
+Check Max-Heap                        Check Max-Heap                              Check Max-Heap                            Check Max-Heap      Check Max-Heap
+
+
+
+====================================================================================================================================================================
+
+
+public class Solution {
+
+	public static boolean checkMaxHeap(int arr[]) {
+		/*
+		 * Your class should be named Solution Don't write main(). Don't read input, it
+		 * is passed as function argument. Return output and don't print it. Taking
+		 * input and printing output is handled automatically.
+		 */
+        return checkMaxHeapHelper(arr,0);
+	}
+    
+    private static boolean checkMaxHeapHelper(int[] arr, int startIndex)
+    {
+        //Base case - if the current parent node index (startIndex) is greater than array size,
+        //then, we have successfully reached the end of the heap nd at each level the max heap property is satisfied
+        //Hence, we return true
+        if(startIndex==arr.length)
+            return true;
+        
+        //Calculate the current indices of the parent and its children
+        int parentIndex=startIndex;
+        int leftChildIndex=2*parentIndex+1,rightChildIndex=2*parentIndex+2;
+        
+        //Assume that the max heap property is satisfied for both children of the current parent
+        boolean leftAns=true,rightAns=true;
+        
+        //If index of left child > array size, then the left child does not exist. Hence, we retain the leftAns=true
+        //If the condition is satisfied, we check if the parent<left child. If it is true, we return false as 
+        //max heap property is violated. Else, we continue with the checks by making the left child the new parent
+        if(leftChildIndex<arr.length)
+        {
+            if(arr[parentIndex]<arr[leftChildIndex])
+                return false;
+            else
+                leftAns=checkMaxHeapHelper(arr,leftChildIndex);
+        }
+        
+        //The if-condition for the right child follows same logic as of the left child
+        if(rightChildIndex<arr.length)
+        {
+            if(arr[parentIndex]<arr[rightChildIndex])
+                return false;
+            else
+                rightAns=checkMaxHeapHelper(arr,rightChildIndex);
+        }
+        
+        //If current parent satisfies the max heap property, then the results for its left and/or right child are 
+        //used to determine if the property is maintained.
+        return (leftAns && rightAns);
+            
+    }
+}
+
+
+
+
+=======================================================================================================================================================================
+
+
+
+Kth largest element               Kth largest element                                     Kth largest element                           Kth largest element
+
+
+
+
+==========================================================================================================================================================================
+
+
+
+
+
+import java.util.*;
+public class Solution {
+
+	public static int kthLargest(int n, int[] input, int k) {
+		// Write your code here
+		PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+        for(int i=0;i<k;i++)
+        {
+            pq.add(input[i]);
+        }
+        
+        for(int i=k;i<input.length;i++)
+        {
+            int minVal=pq.peek();
+            if(minVal<input[i])
+                minVal=input[i];
+            if(minVal!=pq.peek())
+            {
+                pq.poll();
+                pq.add(minVal);
+            }
+        }
+        
+        int minVal=Integer.MAX_VALUE;
+        while(!pq.isEmpty())
+        {
+            int check=pq.poll();
+            if(check<minVal)
+                minVal=check;
+        }
+        return minVal;
+	}
+}
+
+
+
+
+
+======================================================================================================================================================================
+
+
+
+
+Buy the ticket                      Buy the ticket                          Buy the ticket                    Buy the ticket               Buy the ticket 
+
+
+
+
+
+=======================================================================================================================================================================
+
+
+import java.util.*;
+
+public class Solution {
+
+	public static int buyTicket(int input[], int k) {
+		/*
+		 * Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+		 * Taking input and printing output is handled automatically.
+		 */
+		Queue<Integer> queue = new LinkedList<>();
+		PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+		for (int i = 0; i < input.length; i++) {
+			queue.add(i);
+			pq.add(input[i]);
+		}
+		int time = 0;
+		while (!queue.isEmpty()) {
+			if (input[queue.peek()] < pq.peek()) {
+				queue.add(queue.poll());
+			} else {
+				int idx = queue.poll();
+				pq.remove();
+				time++;
+				if (idx == k) {
+					break;
+				}
+			}
+		}
+		return time;
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
